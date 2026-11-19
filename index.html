@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cronologia Storica (1515 - 1680)</title>
+  <title>Atlante Storico (1515 - 1680) — Cronologia Interattiva</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
   <style>
     :root {
-      --bg-base: #0e0f12;
-      --bg-surface: #16181d;
-      --bg-elevated: #1e2128;
-      --bg-card: #22252e;
-      --border-subtle: rgba(255, 255, 255, 0.07);
-      --border-strong: rgba(255, 255, 255, 0.14);
-      --text-primary: #f4f4f6;
-      --text-secondary: #a1a6b4;
-      --text-muted: #717684;
-      --accent-gold: #d4af6a;
+      --bg-deep: #090a0f;
+      --bg-glass: rgba(18, 20, 28, 0.85);
+      --border-glass: rgba(212, 175, 106, 0.15);
+      --border-glass-strong: rgba(212, 175, 106, 0.35);
+      --gold: #d4af6a;
+      --gold-light: #f3e6cc;
+      --gold-dim: rgba(212, 175, 106, 0.12);
+      --text-main: #f3f4f6;
+      --text-muted: #949ab0;
     }
 
     * {
@@ -28,516 +28,573 @@
     }
 
     body {
-      font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg-base);
-      background-image:
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212, 175, 106, 0.08), transparent),
-        radial-gradient(circle at 15% 85%, rgba(40, 86, 143, 0.07), transparent 45%);
-      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-deep);
+      color: var(--text-main);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 50% -20%, rgba(212, 175, 106, 0.12), transparent 60%),
+        radial-gradient(circle at 10% 90%, rgba(40, 86, 143, 0.08), transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(138, 86, 142, 0.08), transparent 50%);
     }
 
-    /* Header */
+    /* Header e Navigazione Superiore */
     header {
-      background: rgba(22, 24, 29, 0.85);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 18px 32px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 20px 36px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 20px;
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 30;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    header h1 {
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-size: 1.85rem;
+    .brand-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(212, 175, 106, 0.2), rgba(212, 175, 106, 0.05));
+      border: 1px solid var(--border-glass-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      box-shadow: 0 0 15px rgba(212, 175, 106, 0.15);
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.75rem;
       font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 0.01em;
-      line-height: 1.1;
-      background: linear-gradient(135deg, #ffffff 35%, #e2cfa8 100%);
+      letter-spacing: 0.04em;
+      background: linear-gradient(135deg, #ffffff 40%, var(--gold-light) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .subtitle {
-      font-size: 0.84rem;
-      color: var(--text-secondary);
-      margin-top: 4px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 3px;
       font-weight: 400;
+      letter-spacing: 0.01em;
     }
 
-    .zoom-controls {
+    .controls-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-box input {
+      background: rgba(14, 16, 22, 0.8);
+      border: 1px solid var(--border-glass);
+      border-radius: 10px;
+      padding: 8px 14px 8px 38px;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      width: 220px;
+      transition: all 0.2s ease;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 12px rgba(212, 175, 106, 0.2);
+      width: 260px;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 12px;
+      color: var(--text-muted);
+      width: 16px;
+      height: 16px;
+    }
+
+    .zoom-group {
       display: inline-flex;
       align-items: center;
-      background: var(--bg-base);
-      border: 1px solid var(--border-strong);
+      background: rgba(14, 16, 22, 0.8);
+      border: 1px solid var(--border-glass);
       border-radius: 10px;
       padding: 4px;
       gap: 4px;
-      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
     }
 
     .zoom-btn {
       background: transparent;
-      border: 1px solid transparent;
-      color: var(--text-secondary);
-      padding: 6px 13px;
+      border: none;
+      color: var(--text-muted);
+      padding: 6px 12px;
       border-radius: 7px;
-      font-family: inherit;
       font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.18s ease;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .zoom-btn:hover {
-      background: var(--bg-elevated);
-      color: #ffffff;
-      border-color: var(--border-subtle);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
     }
 
-    .zoom-btn:active {
-      transform: scale(0.97);
+    .zoom-btn.active-zoom {
+      background: var(--gold-dim);
+      color: var(--gold);
+      border: 1px solid var(--border-glass);
     }
 
-    #zoomReset {
-      color: var(--accent-gold);
-      background: rgba(212, 175, 106, 0.08);
-    }
-
-    #zoomReset:hover {
-      background: rgba(212, 175, 106, 0.16);
-      color: #f3d79b;
-    }
-
-    /* Main Container */
+    /* Struttura Principale */
     main {
       flex: 1;
-      padding: 24px 32px 32px;
+      padding: 24px 36px 36px;
       display: flex;
       flex-direction: column;
+      gap: 20px;
     }
 
-    .timeline-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border-strong);
-      border-radius: 16px;
-      box-shadow:
-        0 24px 48px -12px rgba(0, 0, 0, 0.65),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    .atlas-container {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: 20px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.05);
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
     }
 
-    .timeline-topbar {
-      padding: 14px 24px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, rgba(255, 255, 255, 0) 100%), var(--bg-elevated);
-      border-bottom: 1px solid var(--border-subtle);
+    .atlas-header {
+      padding: 16px 28px;
+      background: rgba(14, 16, 22, 0.6);
+      border-bottom: 1px solid var(--border-glass);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 14px;
-      font-size: 0.82rem;
-      color: var(--text-secondary);
+      gap: 16px;
     }
 
-    .timeline-topbar > span {
+    .nav-instruction {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      color: var(--text-secondary);
+      font-size: 0.82rem;
+      color: var(--text-muted);
     }
 
-    .timeline-topbar > span::before {
-      content: "↔";
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 22px;
-      height: 22px;
-      border-radius: 6px;
-      background: rgba(212, 175, 106, 0.12);
-      color: var(--accent-gold);
-      font-size: 0.78rem;
-      font-weight: 700;
+    .nav-instruction i {
+      color: var(--gold);
     }
 
-    .legend {
+    .legends-bar {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
     }
 
-    .legend-item {
-      display: flex;
+    .legend-chip {
+      display: inline-flex;
       align-items: center;
       gap: 7px;
-      font-weight: 500;
-      color: #e4e6ec;
-      font-size: 0.78rem;
-      background: rgba(14, 15, 18, 0.55);
-      border: 1px solid var(--border-subtle);
-      padding: 5px 11px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 5px 12px;
       border-radius: 999px;
-      transition: border-color 0.2s, background 0.2s;
+      background: rgba(14, 16, 22, 0.7);
+      border: 1px solid var(--border-glass);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
-    .legend-item:hover {
-      border-color: var(--border-strong);
-      background: rgba(255, 255, 255, 0.04);
+    .legend-chip:hover {
+      border-color: var(--gold);
+      transform: translateY(-1px);
     }
 
-    .legend-swatch {
-      width: 10px;
-      height: 10px;
+    .legend-chip.inactive {
+      opacity: 0.35;
+      filter: grayscale(80%);
+    }
+
+    .swatch {
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       box-shadow: 0 0 8px currentColor;
-      flex-shrink: 0;
     }
 
-    /* Scroll Area */
-    .timeline-scroll {
+    /* Area Scrollabile della Timeline */
+    .timeline-viewport {
       overflow-x: auto;
       overflow-y: hidden;
       width: 100%;
-      padding: 28px 0 36px 0;
+      padding: 30px 0 45px 0;
       cursor: grab;
-      background-color: var(--bg-surface);
-      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 20px 20px;
+      background-image: radial-gradient(rgba(212, 175, 106, 0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
       scrollbar-width: thin;
-      scrollbar-color: #3a3f4d #14161b;
+      scrollbar-color: var(--gold) rgba(14, 16, 22, 0.9);
     }
 
-    .timeline-scroll::-webkit-scrollbar {
+    .timeline-viewport::-webkit-scrollbar {
       height: 10px;
     }
 
-    .timeline-scroll::-webkit-scrollbar-track {
-      background: #13151a;
-      border-top: 1px solid var(--border-subtle);
+    .timeline-viewport::-webkit-scrollbar-track {
+      background: rgba(14, 16, 22, 0.9);
+      border-top: 1px solid var(--border-glass);
     }
 
-    .timeline-scroll::-webkit-scrollbar-thumb {
-      background: #333846;
+    .timeline-viewport::-webkit-scrollbar-thumb {
+      background: var(--gold);
       border-radius: 999px;
-      border: 2px solid #13151a;
+      border: 2px solid rgba(14, 16, 22, 0.9);
     }
 
-    .timeline-scroll::-webkit-scrollbar-thumb:hover {
-      background: #4b5266;
-    }
-
-    .timeline-scroll:active {
+    .timeline-viewport:active {
       cursor: grabbing;
     }
 
-    .timeline-canvas {
+    .timeline-board {
       position: relative;
-      height: 640px;
-      margin: 0 48px;
+      height: 680px;
+      margin: 0 60px;
     }
 
-    /* Separatori visivi tra nazioni */
-    .nation-lane-bg {
+    /* Etichette Corsie Lateralí (Aree Geografiche/Politiche) */
+    .lane-label-track {
       position: absolute;
-      left: 0;
-      right: 0;
-      border-bottom: 1px dashed rgba(255, 255, 255, 0.07);
-      pointer-events: none;
-    }
-
-    /* Griglia anni */
-    .year-tick {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      border-left: 1px dashed rgba(255, 255, 255, 0.045);
-      pointer-events: none;
-    }
-
-    .year-tick.major {
-      border-left: 1px solid rgba(255, 255, 255, 0.11);
-    }
-
-    .year-label {
-      position: absolute;
-      top: 324px;
-      transform: translateX(-50%);
-      background: #1d2028;
-      color: #f3e6cc;
-      font-size: 0.74rem;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(212, 175, 106, 0.35);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      z-index: 5;
-    }
-
-    /* Asse centrale */
-    .central-axis {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 337px;
-      height: 2px;
-      background: linear-gradient(90deg, rgba(212, 175, 106, 0.25), rgba(212, 175, 106, 0.65) 50%, rgba(212, 175, 106, 0.25));
-      box-shadow: 0 0 12px rgba(212, 175, 106, 0.25);
-      z-index: 2;
-    }
-
-    /* Barre Periodi e Governi */
-    .period-bar {
-      position: absolute;
-      height: 30px;
-      border-radius: 8px;
-      padding: 0 11px;
+      left: -190px;
+      width: 170px;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      color: #ffffff;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(0, 0, 0, 0.18) 100%);
-      box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
-      transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), filter 0.18s ease, box-shadow 0.18s ease;
-      z-index: 4;
-      overflow: hidden;
-      white-space: nowrap;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
-    }
-
-    .period-bar:hover {
-      transform: translateY(-2px) scale(1.005);
-      filter: brightness(1.14);
-      box-shadow:
-        0 10px 22px rgba(0, 0, 0, 0.55),
-        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
       z-index: 10;
     }
 
-    .period-title {
+    .lane-tag {
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      padding-right: 12px;
+      border-right: 2px solid var(--gold);
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 106, 0.05));
+    }
+
+    /* Sfondi Corsie Orizzontali */
+    .lane-divider {
+      position: absolute;
+      left: 0;
+      right: 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+      pointer-events: none;
+    }
+
+    /* Anni & Griglia Verticale */
+    .grid-tick {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-left: 1px dashed rgba(255, 255, 255, 0.04);
+      pointer-events: none;
+    }
+
+    .grid-tick.major {
+      border-left: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .year-badge-node {
+      position: absolute;
+      top: 342px;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #181b24, #101218);
+      color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-glass-strong);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      z-index: 6;
+    }
+
+    /* Asse Centrale Principale */
+    .central-timeline-axis {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 358px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold) 15%, #ffffff 50%, var(--gold) 85%, transparent);
+      box-shadow: 0 0 15px rgba(212, 175, 106, 0.4);
+      z-index: 3;
+    }
+
+    /* Barre Periodi Storici (Sopra l'asse) */
+    .historical-period-bar {
+      position: absolute;
+      height: 34px;
+      border-radius: 10px;
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(0, 0, 0, 0.22) 100%);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 5;
+      overflow: hidden;
+      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,0.2);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    }
+
+    .historical-period-bar:hover {
+      transform: translateY(-3px) scale(1.008);
+      filter: brightness(1.2);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.4);
+      z-index: 15;
+      border-color: #ffffff;
+    }
+
+    .period-label-text {
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .period-years {
-      font-size: 0.67rem;
-      opacity: 0.95;
-      font-weight: 600;
+    .period-range-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 3px 7px;
+      border-radius: 5px;
+      letter-spacing: 0.03em;
       flex-shrink: 0;
-      background: rgba(0, 0, 0, 0.24);
-      padding: 2px 6px;
-      border-radius: 4px;
-      letter-spacing: 0.02em;
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
     /* Eventi Puntuali (Sotto l'asse) */
-    .event-marker {
+    .historical-event-node {
       position: absolute;
-      top: 338px;
+      top: 360px;
       transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
       cursor: pointer;
-      z-index: 4;
+      z-index: 5;
     }
 
-    .event-marker:hover {
-      z-index: 14;
+    .historical-event-node:hover {
+      z-index: 20;
     }
 
-    .event-dot {
-      width: 12px;
-      height: 12px;
+    .event-dot-marker {
+      width: 13px;
+      height: 13px;
       border-radius: 50%;
-      border: 2.5px solid var(--bg-surface);
+      border: 2.5px solid var(--bg-deep);
       margin-top: -6px;
-      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .event-marker:hover .event-dot {
-      transform: scale(1.35);
+    .historical-event-node:hover .event-dot-marker {
+      transform: scale(1.5);
     }
 
-    .event-stem {
-      width: 1.5px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.1) 100%);
+    .event-connector-stem {
+      width: 2px;
+      background: linear-gradient(180deg, rgba(212, 175, 106, 0.6) 0%, rgba(255, 255, 255, 0.15) 100%);
       transition: background 0.2s;
     }
 
-    .event-marker:hover .event-stem {
-      background: rgba(212, 175, 106, 0.65);
-    }
-
-    .event-card {
-      background: linear-gradient(180deg, #252934 0%, #1d2029 100%);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .historical-event-card {
+      background: linear-gradient(180deg, #1b1e28 0%, #13151c 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-left-width: 4px;
-      border-radius: 9px;
-      padding: 8px 11px;
-      width: 164px;
-      box-shadow:
-        0 8px 18px rgba(0, 0, 0, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.07);
-      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s, border-color 0.2s, box-shadow 0.2s;
+      border-radius: 10px;
+      padding: 10px 12px;
+      width: 174px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .event-marker:hover .event-card {
-      transform: translateY(3px);
-      background: linear-gradient(180deg, #2d3240 0%, #232732 100%);
-      border-color: rgba(255, 255, 255, 0.22);
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.6);
+    .historical-event-node:hover .historical-event-card {
+      transform: translateY(4px) scale(1.03);
+      background: linear-gradient(180deg, #242835, #191c25);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 16px 35px rgba(0,0,0,0.7);
     }
 
-    .event-year {
-      font-size: 0.7rem;
+    .event-card-date {
+      font-size: 0.71rem;
       font-weight: 700;
       letter-spacing: 0.03em;
-      filter: brightness(1.55) saturate(1.2) !important;
+      filter: brightness(1.6) saturate(1.3);
     }
 
-    .event-name {
-      font-size: 0.76rem;
+    .event-card-title {
+      font-size: 0.78rem;
       font-weight: 600;
-      color: #f3f4f6;
+      color: var(--text-main);
       line-height: 1.3;
       margin-top: 3px;
     }
 
-    /* Finestra Modale */
-    .modal-backdrop {
+    /* Finestra Modale di Approfondimento */
+    .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(7, 8, 11, 0.78);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: rgba(5, 6, 9, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
       z-index: 50;
+      opacity: 0;
+      transition: opacity 0.25s ease;
     }
 
-    .modal-backdrop.open {
+    .modal-overlay.open {
       display: flex;
+      opacity: 1;
     }
 
-    .modal-box {
-      background: linear-gradient(180deg, #222630 0%, #191c24 100%);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 16px;
-      max-width: 520px;
+    .modal-window {
+      background: linear-gradient(180deg, #1c202d 0%, #11131a 100%);
+      border: 1px solid var(--border-glass-strong);
+      border-radius: 20px;
+      max-width: 560px;
       width: 100%;
-      padding: 28px;
-      box-shadow:
-        0 28px 60px rgba(0, 0, 0, 0.75),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      animation: modalReveal 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 32px;
+      box-shadow: 0 35px 70px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.12);
+      transform: translateY(15px) scale(0.95);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
     }
 
-    @keyframes modalReveal {
-      from {
-        opacity: 0;
-        transform: translateY(10px) scale(0.96);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+    .modal-overlay.open .modal-window {
+      transform: translateY(0) scale(1);
     }
 
-    .modal-header {
+    .modal-header-flex {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: 16px;
-      margin-bottom: 16px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-glass);
     }
 
-    .modal-badge {
+    .modal-category-badge {
       display: inline-block;
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
-      padding: 4px 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 5px 14px;
       border-radius: 999px;
       color: #ffffff;
       margin-bottom: 10px;
-      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(0, 0, 0, 0.16) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255,255,255,0.25);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
     }
 
-    .modal-title {
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-size: 1.55rem;
+    .modal-headline {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
       font-weight: 700;
-      line-height: 1.2;
+      line-height: 1.25;
       color: #ffffff;
     }
 
-    .modal-close {
+    .modal-close-btn {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-subtle);
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      font-size: 0.95rem;
+      border: 1px solid var(--border-glass);
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      font-size: 1rem;
       cursor: pointer;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: all 0.18s ease;
+      transition: all 0.2s ease;
     }
 
-    .modal-close:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: var(--border-strong);
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--gold);
       color: #ffffff;
       transform: rotate(90deg);
     }
 
-    .modal-body {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: #d5d8e2;
+    .modal-content-body {
+      font-size: 0.96rem;
+      line-height: 1.75;
+      color: #d1d5db;
     }
 
-    @media (max-width: 640px) {
+    /* Responsive */
+    @media (max-width: 768px) {
       header {
         padding: 16px 20px;
       }
       main {
         padding: 16px;
       }
-      .timeline-topbar {
-        padding: 12px 16px;
+      .lane-label-track {
+        display: none;
+      }
+      .timeline-board {
+        margin: 0 20px;
       }
     }
   </style>
@@ -545,272 +602,317 @@
 <body>
 
   <header>
-    <div>
-      <h1>Cronologia Storica (1515 - 1680)</h1>
-      <p class="subtitle">Clicca su qualsiasi periodo o evento per visualizzare la descrizione</p>
+    <div class="brand-area">
+      <div class="brand-icon">
+        <i data-lucide="landmark"></i>
+      </div>
+      <div>
+        <h1>Atlante Storico (1515 - 1680)</h1>
+        <p class="subtitle">Esplora l'età moderna: imperi, conflitti religiosi e trasformazioni statali</p>
+      </div>
     </div>
-    <div class="zoom-controls">
-      <button class="zoom-btn" id="zoomOut">− Riduci</button>
-      <button class="zoom-btn" id="zoomReset">100%</button>
-      <button class="zoom-btn" id="zoomIn">+ Ingrandisci</button>
+    <div class="controls-wrapper">
+      <div class="search-box">
+        <i data-lucide="search"></i>
+        <input type="text" id="searchInput" placeholder="Cerca evento o periodo..." />
+      </div>
+      <div class="zoom-group">
+        <button class="zoom-btn" id="zoomOut">
+          <i data-lucide="zoom-out" style="width:14px; height:14px;"></i> Riduci
+        </button>
+        <button class="zoom-btn active-zoom" id="zoomReset">100%</button>
+        <button class="zoom-btn" id="zoomIn">
+          <i data-lucide="zoom-in" style="width:14px; height:14px;"></i> Ingrandisci
+        </button>
+      </div>
     </div>
   </header>
 
   <main>
-    <div class="timeline-card">
-      <div class="timeline-topbar">
-        <span>Scorri orizzontalmente per esplorare gli anni dal 1515 al 1680</span>
-        <div class="legend">
-          <div class="legend-item">
-            <span class="legend-swatch" style="background: #6c8453; color: #6c8453;"></span>
-            <span>Impero/Germania</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-swatch" style="background: #8a568e; color: #8a568e;"></span>
-            <span>Stato della Chiesa</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-swatch" style="background: #a38348; color: #a38348;"></span>
-            <span>Spagna</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-swatch" style="background: #28568f; color: #28568f;"></span>
-            <span>Inghilterra</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-swatch" style="background: #9f494c; color: #9f494c;"></span>
-            <span>Francia</span>
-          </div>
+    <div class="atlas-container">
+      <div class="atlas-header">
+        <div class="nav-instruction">
+          <i data-lucide="move-horizontal"></i>
+          <span>Trascina o scorri orizzontalmente per esplorare la linea del tempo</span>
+        </div>
+        <div class="legends-bar" id="legendContainer">
+          <!-- Generato dinamicamente via JS -->
         </div>
       </div>
 
-      <div class="timeline-scroll" id="timelineScroll">
-        <div class="timeline-canvas" id="timelineCanvas"></div>
+      <div class="timeline-viewport" id="timelineScroll">
+        <div class="timeline-board" id="timelineCanvas">
+          <!-- Corsie e Contenuti dinamici -->
+        </div>
       </div>
     </div>
   </main>
 
-  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true">
-    <div class="modal-box">
-      <div class="modal-header">
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
+    <div class="modal-window">
+      <div class="modal-header-flex">
         <div>
-          <span class="modal-badge" id="modalBadge"></span>
-          <h3 class="modal-title" id="modalTitle"></h3>
+          <span class="modal-category-badge" id="modalBadge"></span>
+          <h3 class="modal-headline" id="modalTitle"></h3>
         </div>
-        <button class="modal-close" id="modalClose" aria-label="Chiudi">✕</button>
+        <button class="modal-close-btn" id="modalClose" aria-label="Chiudi">
+          <i data-lucide="x" style="width:18px; height:18px;"></i>
+        </button>
       </div>
-      <p class="modal-body" id="modalDesc"></p>
+      <p class="modal-content-body" id="modalDesc"></p>
     </div>
   </div>
 
   <script>
+    // Inizializzazione icone Lucide
+    lucide.createIcons();
+
     const START_YEAR = 1515;
     const END_YEAR = 1680;
-    let pixelsPerYear = 13;
+    let pixelsPerYear = 14;
 
-    // Periodi raggruppati per nazione/area in corsie esclusive (zero sovrapposizioni)
+    // Configurazione delle corsie geografiche/politiche
+    const lanes = [
+      { id: 0, title: "Impero / Germania" },
+      { id: 1, title: "Impero Asburgico" },
+      { id: 2, title: "Chiesa / Controriforma" },
+      { id: 3, title: "Spagna & Fiandre" },
+      { id: 4, title: "Paesi Bassi" },
+      { id: 5, title: "Inghilterra" },
+      { id: 6, title: "Francia" }
+    ];
+
+    // Colori per categorie
+    const categories = {
+      impero: { name: "Impero / Germania", color: "#6c8453" },
+      chiesa: { name: "Stato della Chiesa", color: "#8a568e" },
+      spagna: { name: "Spagna & Fiandre", color: "#a38348" },
+      inghilterra: { name: "Inghilterra", color: "#28568f" },
+      francia: { name: "Francia", color: "#9f494c" }
+    };
+
     const periodi = [
-      // --- AREA 1: IMPERO / GERMANIA (Corsie 0 e 1) ---
       {
         titolo: "Riforma luterana",
         inizio: 1517,
         fine: 1521,
         corsia: 0,
-        colore: "#6c8453",
-        descrizione: "Avvio della frattura religiosa in Germania con le tesi di Martin Lutero fino alla Dieta di Worms e alla sua scomunica."
+        categoria: "impero",
+        descrizione: "Avvio della frattura religiosa in Germania con la pubblicazione delle tesi di Martin Lutero fino alla Dieta di Worms e alla definitiva scomunica imperiale."
       },
       {
-        titolo: "Epoca della confessionalizzazione e tensioni nell'Impero",
+        titolo: "Epoca della confessionalizzazione",
         inizio: 1555,
         fine: 1618,
         corsia: 0,
-        colore: "#6c8453",
-        descrizione: "Periodo compreso tra la Pace di Augusta e lo scoppio della Guerra dei Trent'anni, caratterizzato dalla definizione delle confessioni religiose e crescenti tensioni politiche nell'Impero."
+        categoria: "impero",
+        descrizione: "Periodo compreso tra la Pace di Augusta e lo scoppio della Guerra dei Trent'anni, caratterizzato dalla definizione delle identità confessionali e da crescenti tensioni istituzionali."
       },
       {
         titolo: "Impero di Carlo V",
         inizio: 1519,
         fine: 1556,
         corsia: 1,
-        colore: "#6c8453",
-        descrizione: "Regno di Carlo V d'Asburgo su un vasto impero europeo e coloniale, segnato dalla Riforma protestante e dalle guerre contro Francia e Ottomani."
+        categoria: "impero",
+        descrizione: "Il vasto regno universale di Carlo d'Asburgo, segnato dai conflitti per l'egemonia europea contro la Francia di Francesco I e l'espansione ottomana."
       },
       {
         titolo: "Guerra dei Trent'anni",
         inizio: 1618,
         fine: 1648,
         corsia: 1,
-        colore: "#6c8453",
-        descrizione: "Conflitto europeo iniziato come scontro religioso nell'Impero germanico e trasformatosi in guerra per l'egemonia continentale fino alla Pace di Vestfalia."
+        categoria: "impero",
+        descrizione: "Immane conflitto europeo originato da motivazioni religiose e politiche nell'Impero germanico, conclusosi con i trattati della Pace di Vestfalia."
       },
-
-      // --- AREA 2: CHIESA / CONCILIO (Corsia 2) ---
       {
         titolo: "Concilio di Trento e Controriforma",
         inizio: 1545,
         fine: 1563,
         corsia: 2,
-        colore: "#8a568e",
-        descrizione: "Concilio ecumenico convocato dalla Chiesa cattolica per riaffermare i dogmi tradizionali e riorganizzare la disciplina ecclesiastica in risposta al protestantesimo."
+        categoria: "chiesa",
+        descrizione: "Grande concilio ecumenico volto a ridefinire il dogma cattolico, contrastare il protestantesimo e riorganizzare la disciplina pastorale in tutta Europa."
       },
-
-      // --- AREA 3: SPAGNA / PAESI BASSI (Corsie 3 e 4) ---
       {
         titolo: "Regno di Filippo II",
         inizio: 1556,
         fine: 1598,
         corsia: 3,
-        colore: "#a38348",
-        descrizione: "Governo del sovrano spagnolo, difensore dell'ortodossia cattolica, impegnato contro l'Impero Ottomano, i ribelli dei Paesi Bassi e l'Inghilterra."
+        categoria: "spagna",
+        descrizione: "Il governo del 'Re Prudente', difensore intransigente della fede cattolica, al vertice della potenza globale spagnola e dei suoi domini transoceanici ed europei."
       },
       {
         titolo: "Rivolta dei Paesi Bassi",
         inizio: 1566,
         fine: 1581,
         corsia: 4,
-        colore: "#a38348",
-        descrizione: "Insurrezione delle province dei Paesi Bassi contro il dominio e la pressione fiscale e religiosa di Filippo II di Spagna, culminata nella dichiarazione d'indipendenza."
+        categoria: "spagna",
+        descrizione: "L'insurrezione delle province settentrionali dei Paesi Bassi contro il centralismo e l'intolleranza religiosa spagnola, culminata nell'Atto di Abiura."
       },
-
-      // --- AREA 4: INGHILTERRA (Corsia 5 - sequenza continua senza sovrapposizioni) ---
       {
-        titolo: "Fase della Riforma e regno dei Tudor",
+        titolo: "Riforma e Tudor (Enrico VIII - Maria I)",
         inizio: 1534,
         fine: 1558,
         corsia: 5,
-        colore: "#28568f",
-        descrizione: "Periodo che va dallo scisma anglicano di Enrico VIII ai brevi regni di Edoardo VI e Maria I la Cattolica, segnato da profondi mutamenti religiosi in Inghilterra."
+        categoria: "inghilterra",
+        descrizione: "Il distacco della Chiesa inglese da Roma con lo scisma enriciano e le successive oscillazioni confessionali tra protestantesimo e restaurazione cattolica."
       },
       {
         titolo: "Epoca elisabettiana",
         inizio: 1558,
         fine: 1603,
         corsia: 5,
-        colore: "#28568f",
-        descrizione: "Regno di Elisabetta I, caratterizzato dal consolidamento dell'anglicanesimo, dalla fioritura culturale ed economica e dall'ascesa marittima dell'Inghilterra."
+        categoria: "inghilterra",
+        descrizione: "L'età dell'oro inglese sotto Elisabetta I: consolidamento definitivo dell'anglicanesimo, fioritura culturale rinascimentale e affermazione marittima."
       },
-
-      // --- AREA 5: FRANCIA (Corsia 6 - sequenza continua senza sovrapposizioni) ---
       {
         titolo: "Guerre di religione in Francia",
         inizio: 1562,
         fine: 1598,
         corsia: 6,
-        colore: "#9f494c",
-        descrizione: "Conflitti civili tra cattolici e ugonotti (calvinisti francesi) che sconvolsero la Francia fino alla promulgazione dell'Editto di Nantes."
+        categoria: "francia",
+        descrizione: "Sanguinosi conflitti civili e dinastici tra la fazione cattolica e gli ugonotti calvinisti francesi, culminati nella celebre crisi dello Stato sabaudo-francese."
       },
       {
         titolo: "Regno di Enrico IV",
         inizio: 1598,
         fine: 1610,
         corsia: 6,
-        colore: "#9f494c",
-        descrizione: "Primo sovrano della dinastia dei Borbone: pacifica il regno dopo le guerre di religione e avvia la ricostruzione economica della Francia."
+        categoria: "francia",
+        descrizione: "Il primo monarca borbonico pacifica la nazione devastata dalle guerre civili grazie alla tolleranza dell'Editto di Nantes e avvia la ripresa economica."
       },
       {
-        titolo: "Regno di Maria de' Medici e successivamente di Luigi XIII",
+        titolo: "Reggenza e avvio di Luigi XIII",
         inizio: 1610,
         fine: 1624,
         corsia: 6,
-        colore: "#9f494c",
-        descrizione: "Periodo della reggenza di Maria de' Medici e dei primi anni di governo personale di Luigi XIII, segnato da instabilità interna prima dell'ascesa di Richelieu."
+        categoria: "francia",
+        descrizione: "Periodo di reggenza sotto Maria de' Medici e transizione verso il consolidamento monarchico prima della piena affermazione del cardinale Richelieu."
       },
       {
-        titolo: "Governo di Richelieu e assolutismo",
+        titolo: "Governo del cardinale Richelieu",
         inizio: 1624,
         fine: 1642,
         corsia: 6,
-        colore: "#9f494c",
-        descrizione: "Azione politica del cardinale Richelieu come primo ministro di Luigi XIII volta a rafforzare il potere assoluto della monarchia francese e ridimensionare gli Asburgo."
+        categoria: "francia",
+        descrizione: "Azione politica incisiva volta a rafforzare l'assolutismo regio in Francia, abbattere il potere politico ugonotto e contrastare il predominio degli Asburgo."
       }
     ];
 
-    // Tutti gli 8 eventi puntuali presenti nella foto di riferimento
     const eventi = [
       {
         anno: 1517,
-        dataEtichetta: "1517-10-31",
+        dataEtichetta: "31 Ott 1517",
         titolo: "Martin Lutero affige le 95 tesi",
         livello: 0,
-        colore: "#6c8453",
-        descrizione: "Il 31 ottobre 1517 Martin Lutero rende note a Wittenberg le 95 tesi contro la vendita delle indulgenze, dando inizio alla Riforma protestante."
+        categoria: "impero",
+        descrizione: "Il monaco agostiniano Martin Lutero affigge le 95 tesi sulla porta della cattedrale di Wittenberg, contestando la pratica delle indulgenze."
       },
       {
         anno: 1534,
         dataEtichetta: "1534",
-        titolo: "Atto di Supremazia di Enrico VIII",
+        titolo: "Atto di Supremazia inglese",
         livello: 1,
-        colore: "#28568f",
-        descrizione: "Il Parlamento inglese riconosce re Enrico VIII come Capo Supremo della Chiesa d'Inghilterra, sancendo lo scisma da Roma."
+        categoria: "inghilterra",
+        descrizione: "Il Parlamento approva l'Atto di Supremazia, sancendo formalmente la nascita della Chiesa anglicana indipendente dall'autorità papale."
       },
       {
         anno: 1555,
         dataEtichetta: "1555",
         titolo: "Pace di Augusta",
         livello: 0,
-        colore: "#6c8453",
-        descrizione: "Accordo firmato nell'Impero germanico che stabilisce il principio 'cuius regio, eius religio' tra principi cattolici e luterani."
+        categoria: "impero",
+        descrizione: "Viene sancito il principio del 'cuius regio, eius religio', legalizzando la coesistenza tra cattolicesimo e luteranesimo all'interno del Sacro Romano Impero."
       },
       {
         anno: 1571,
-        dataEtichetta: "1571-10-07",
+        dataEtichetta: "7 Ott 1571",
         titolo: "Battaglia di Lepanto",
         livello: 1,
-        colore: "#a38348",
-        descrizione: "Il 7 ottobre 1571 la flotta cristiana della Lega Santa, guidata dalla Spagna, sconfigge la flotta dell'Impero Ottomano."
+        categoria: "spagna",
+        descrizione: "La flotta della Lega Santa cristiana sconfigge decisamente le forze navali dell'Impero Ottomano nelle acque del Peloponneso."
       },
       {
         anno: 1572,
-        dataEtichetta: "1572",
+        dataEtichetta: "24 Ago 1572",
         titolo: "Strage di san Bartolomeo",
         livello: 2,
-        colore: "#9f494c",
-        descrizione: "Massacro degli ugonotti a Parigi e in altre città francesi durante le guerre di religione."
+        categoria: "francia",
+        descrizione: "Il feroce massacro degli ugonotti a Parigi durante la notte di San Bartolomeo, che impresse una svolta drammatica alle guerre di religione."
       },
       {
         anno: 1588,
         dataEtichetta: "1588",
         titolo: "Sconfitta dell'Invincibile Armata",
         livello: 0,
-        colore: "#28568f",
-        descrizione: "La grande flotta spagnola inviata da Filippo II per invadere l'Inghilterra viene sconfitta dalla marina inglese di Elisabetta I."
+        categoria: "inghilterra",
+        descrizione: "La flotta strategica spagnola inviata contro l'Inghilterra viene dispersa e sconfitta, segnando l'ascesa della potenza navale inglese."
       },
       {
         anno: 1598,
         dataEtichetta: "1598",
         titolo: "Editto di Nantes",
         livello: 1,
-        colore: "#9f494c",
-        descrizione: "Decreto emanato da Enrico IV che concede libertà di culto e garanzie politiche agli ugonotti, chiudendo le guerre di religione in Francia."
+        categoria: "francia",
+        descrizione: "Re Enrico IV promulga l'editto garantendo libertà di coscienza e diritti civili e militari alla minoranza ugonotta francese."
       },
       {
         anno: 1648,
         dataEtichetta: "1648",
         titolo: "Pace di Vestfalia",
         livello: 2,
-        colore: "#6c8453",
-        descrizione: "Insieme di trattati che pongono fine alla Guerra dei Trent'anni e ridisegnano gli equilibri politici e religiosi europei."
+        categoria: "impero",
+        descrizione: "I trattati di Vestfalia pongono fine alla Guerra dei Trent'anni, ridefinendo il sistema degli Stati europei e il diritto internazionale."
       }
     ];
 
+    // Stato filtri attivi per categorie
+    const activeFilters = {
+      impero: true,
+      chiesa: true,
+      spagna: true,
+      inghilterra: true,
+      francia: true
+    };
+
     const canvas = document.getElementById("timelineCanvas");
-    const modalBackdrop = document.getElementById("modalBackdrop");
+    const legendContainer = document.getElementById("legendContainer");
+    const modalOverlay = document.getElementById("modalOverlay");
     const modalBadge = document.getElementById("modalBadge");
     const modalTitle = document.getElementById("modalTitle");
     const modalDesc = document.getElementById("modalDesc");
     const modalClose = document.getElementById("modalClose");
+    const searchInput = document.getElementById("searchInput");
+
+    function renderLegends() {
+      legendContainer.innerHTML = "";
+      Object.keys(categories).forEach(key => {
+        const cat = categories[key];
+        const chip = document.createElement("div");
+        chip.className = `legend-chip ${activeFilters[key] ? '' : 'inactive'}`;
+        chip.innerHTML = `
+          <span class="swatch" style="background: ${cat.color}; color: ${cat.color};"></span>
+          <span>${cat.name}</span>
+        `;
+        chip.addEventListener("click", () => {
+          activeFilters[key] = !activeFilters[key];
+          renderLegends();
+          renderTimeline();
+        });
+        legendContainer.appendChild(chip);
+      });
+    }
 
     function openModal(badgeText, badgeColor, title, description) {
       modalBadge.textContent = badgeText;
       modalBadge.style.backgroundColor = badgeColor;
       modalTitle.textContent = title;
       modalDesc.textContent = description;
-      modalBackdrop.classList.add("open");
+      modalOverlay.classList.add("open");
     }
 
-    modalClose.addEventListener("click", () => modalBackdrop.classList.remove("open"));
-    modalBackdrop.addEventListener("click", (e) => {
-      if (e.target === modalBackdrop) modalBackdrop.classList.remove("open");
+    modalClose.addEventListener("click", () => modalOverlay.classList.remove("open"));
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) modalOverlay.classList.remove("open");
     });
 
     function renderTimeline() {
@@ -818,133 +920,191 @@
       const totalWidth = (END_YEAR - START_YEAR) * pixelsPerYear;
       canvas.style.width = totalWidth + "px";
 
-      // Linee sottili di separazione tra le fasce delle nazioni (dopo corsia 1, 2, 4, 5)
-      const groupDividers = [1, 2, 4, 5];
-      groupDividers.forEach((laneIdx) => {
-        const divider = document.createElement("div");
-        divider.className = "nation-lane-bg";
-        divider.style.top = (14 + laneIdx * 42 + 34) + "px";
-        canvas.appendChild(divider);
+      // 1. Renderizza le etichette delle corsie laterali sulla sinistra
+      const labelTrack = document.createElement("div");
+      labelTrack.className = "lane-label-track";
+      lanes.forEach(lane => {
+        const tag = document.createElement("div");
+        tag.className = "lane-tag";
+        tag.textContent = lane.title;
+        tag.style.top = (16 + lane.id * 44) + "px";
+        labelTrack.appendChild(tag);
+      });
+      canvas.appendChild(labelTrack);
+
+      // 2. Linee divisorie orizzontali delle corsie
+      lanes.forEach((_, idx) => {
+        if(idx > 0) {
+          const divider = document.createElement("div");
+          divider.className = "lane-divider";
+          divider.style.top = (16 + idx * 44 - 6) + "px";
+          canvas.appendChild(divider);
+        }
       });
 
-      // Asse centrale
+      // 3. Asse centrale
       const axis = document.createElement("div");
-      axis.className = "central-axis";
+      axis.className = "central-timeline-axis";
       canvas.appendChild(axis);
 
-      // Tacche anni (ogni 5 anni, etichetta ogni 10)
+      // 4. Tacche e griglia anni (ogni 5 anni)
       for (let year = START_YEAR; year <= END_YEAR; year += 5) {
         const x = (year - START_YEAR) * pixelsPerYear;
         const isMajor = year % 10 === 0;
 
         const tick = document.createElement("div");
-        tick.className = "year-tick" + (isMajor ? " major" : "");
+        tick.className = `grid-tick ${isMajor ? 'major' : ''}`;
         tick.style.left = x + "px";
         canvas.appendChild(tick);
 
         if (isMajor || pixelsPerYear >= 18) {
-          const label = document.createElement("div");
-          label.className = "year-label";
-          label.style.left = x + "px";
-          label.textContent = year;
-          canvas.appendChild(label);
+          const yearBadge = document.createElement("div");
+          yearBadge.className = "year-badge-node";
+          yearBadge.style.left = x + "px";
+          yearBadge.textContent = year;
+          canvas.appendChild(yearBadge);
         }
       }
 
-      // Periodi (sopra l'asse)
-      periodi.forEach((p) => {
+      const searchQuery = searchInput.value.toLowerCase().trim();
+
+      // 5. Renderizza i periodi storici (Sopra l'asse)
+      periodi.forEach(p => {
+        if (!activeFilters[p.categoria]) return;
+
+        const matchesSearch = !searchQuery || 
+          p.titolo.toLowerCase().includes(searchQuery) || 
+          p.descrizione.toLowerCase().includes(searchQuery);
+
         const left = (p.inizio - START_YEAR) * pixelsPerYear;
-        const width = Math.max((p.fine - p.inizio) * pixelsPerYear, 36);
-        const top = 14 + p.corsia * 42;
+        const width = Math.max((p.fine - p.inizio) * pixelsPerYear, 40);
+        const top = 16 + p.corsia * 44;
+        const color = categories[p.categoria].color;
 
         const bar = document.createElement("div");
-        bar.className = "period-bar";
+        bar.className = "historical-period-bar";
         bar.style.left = left + "px";
         bar.style.width = width + "px";
         bar.style.top = top + "px";
-        bar.style.backgroundColor = p.colore;
-        bar.title = `${p.inizio} / ${p.fine} — ${p.titolo}`;
+        bar.style.backgroundColor = color;
+        if (searchQuery && matchesSearch) {
+          bar.style.boxShadow = "0 0 20px #ffffff, inset 0 1px 0 rgba(255,255,255,0.5)";
+          bar.style.borderColor = "#ffffff";
+        } else if (searchQuery && !matchesSearch) {
+          bar.style.opacity = "0.2";
+        }
 
         bar.innerHTML = `
-          <span class="period-title">${p.titolo}</span>
-          <span class="period-years">${p.inizio} / ${p.fine}</span>
+          <span class="period-label-text">${p.titolo}</span>
+          <span class="period-range-tag">${p.inizio}–${p.fine}</span>
         `;
 
         bar.addEventListener("click", () => {
-          openModal(
-            `${p.inizio} / ${p.fine}`,
-            p.colore,
-            p.titolo,
-            p.descrizione
-          );
+          openModal(`${p.inizio} – ${p.fine}`, color, p.titolo, p.descrizione);
         });
 
         canvas.appendChild(bar);
       });
 
-      // Eventi puntuali (sotto l'asse)
-      eventi.forEach((ev) => {
+      // 6. Renderizza gli eventi puntuali (Sotto l'asse)
+      eventi.forEach(ev => {
+        if (!activeFilters[ev.categoria]) return;
+
+        const matchesSearch = !searchQuery || 
+          ev.titolo.toLowerCase().includes(searchQuery) || 
+          ev.descrizione.toLowerCase().includes(searchQuery) ||
+          ev.dataEtichetta.toLowerCase().includes(searchQuery);
+
         const left = (ev.anno - START_YEAR) * pixelsPerYear;
-        const stemHeights = [24, 92, 160];
-        const stemHeight = stemHeights[ev.livello] || 24;
+        const stemHeights = [26, 96, 166];
+        const stemHeight = stemHeights[ev.livello] || 26;
+        const color = categories[ev.categoria].color;
 
         const marker = document.createElement("div");
-        marker.className = "event-marker";
+        marker.className = "historical-event-node";
         marker.style.left = left + "px";
+        if (searchQuery && !matchesSearch) {
+          marker.style.opacity = "0.2";
+        }
 
         marker.innerHTML = `
-          <div class="event-dot" style="background: ${ev.colore}; box-shadow: 0 0 0 2px ${ev.colore};"></div>
-          <div class="event-stem" style="height: ${stemHeight}px;"></div>
-          <div class="event-card" style="border-left-color: ${ev.colore};">
-            <div class="event-year" style="color: ${ev.colore}; filter: brightness(1.35);">${ev.dataEtichetta}</div>
-            <div class="event-name">${ev.titolo}</div>
+          <div class="event-dot-marker" style="background: ${color}; box-shadow: 0 0 12px ${color};"></div>
+          <div class="event-connector-stem" style="height: ${stemHeight}px;"></div>
+          <div class="historical-event-card" style="border-left-color: ${color};">
+            <div class="event-card-date" style="color: ${color};">${ev.dataEtichetta}</div>
+            <div class="event-card-title">${ev.titolo}</div>
           </div>
         `;
 
         marker.addEventListener("click", () => {
-          openModal(ev.dataEtichetta, ev.colore, ev.titolo, ev.descrizione);
+          openModal(ev.dataEtichetta, color, ev.titolo, ev.descrizione);
         });
 
         canvas.appendChild(marker);
       });
     }
 
-    document.getElementById("zoomIn").addEventListener("click", () => {
-      pixelsPerYear = Math.min(28, pixelsPerYear + 3);
+    // Gestione pulsanti Zoom
+    const zoomInBtn = document.getElementById("zoomIn");
+    const zoomOutBtn = document.getElementById("zoomOut");
+    const zoomResetBtn = document.getElementById("zoomReset");
+
+    function updateZoomButtons() {
+      zoomInBtn.classList.remove("active-zoom");
+      zoomOutBtn.classList.remove("active-zoom");
+      zoomResetBtn.classList.remove("active-zoom");
+
+      if (pixelsPerYear > 14) zoomInBtn.classList.add("active-zoom");
+      else if (pixelsPerYear < 14) zoomOutBtn.classList.add("active-zoom");
+      else zoomResetBtn.classList.add("active-zoom");
+    }
+
+    zoomInBtn.addEventListener("click", () => {
+      pixelsPerYear = Math.min(26, pixelsPerYear + 3);
+      updateZoomButtons();
       renderTimeline();
     });
 
-    document.getElementById("zoomOut").addEventListener("click", () => {
+    zoomOutBtn.addEventListener("click", () => {
       pixelsPerYear = Math.max(8, pixelsPerYear - 3);
+      updateZoomButtons();
       renderTimeline();
     });
 
-    document.getElementById("zoomReset").addEventListener("click", () => {
-      pixelsPerYear = 13;
+    zoomResetBtn.addEventListener("click", () => {
+      pixelsPerYear = 14;
+      updateZoomButtons();
       renderTimeline();
     });
 
-    // Scorrimento con trascinamento mouse
-    const scrollBox = document.getElementById("timelineScroll");
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    scrollBox.addEventListener("mousedown", (e) => {
-      isDown = true;
-      startX = e.pageX - scrollBox.offsetLeft;
-      scrollLeft = scrollBox.scrollLeft;
+    searchInput.addEventListener("input", () => {
+      renderTimeline();
     });
-    scrollBox.addEventListener("mouseleave", () => (isDown = false));
-    scrollBox.addEventListener("mouseup", () => (isDown = false));
-    scrollBox.addEventListener("mousemove", (e) => {
-      if (!isDown) return;
+
+    // Trascina per scorrere la viewport (Drag-to-scroll)
+    const scrollViewport = document.getElementById("timelineScroll");
+    let isDragging = false;
+    let startXPos, scrollLeftPos;
+
+    scrollViewport.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      startXPos = e.pageX - scrollViewport.offsetLeft;
+      scrollLeftPos = scrollViewport.scrollLeft;
+    });
+
+    scrollViewport.addEventListener("mouseleave", () => { isDragging = false; });
+    scrollViewport.addEventListener("mouseup", () => { isDragging = false; });
+
+    scrollViewport.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
       e.preventDefault();
-      const x = e.pageX - scrollBox.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      scrollBox.scrollLeft = scrollLeft - walk;
+      const x = e.pageX - scrollViewport.offsetLeft;
+      const walk = (x - startXPos) * 1.5;
+      scrollViewport.scrollLeft = scrollLeftPos - walk;
     });
 
+    // Avvio iniziale
+    renderLegends();
     renderTimeline();
   </script>
 </body>
