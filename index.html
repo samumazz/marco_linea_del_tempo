@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cronologia Storica (1515 - 1680)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-base: #0e0f12;
+      --bg-surface: #16181d;
+      --bg-elevated: #1e2128;
+      --bg-card: #22252e;
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --border-strong: rgba(255, 255, 255, 0.14);
+      --text-primary: #f4f4f6;
+      --text-secondary: #a1a6b4;
+      --text-muted: #717684;
+      --accent-gold: #d4af6a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-base);
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212, 175, 106, 0.08), transparent),
+        radial-gradient(circle at 15% 85%, rgba(40, 86, 143, 0.07), transparent 45%);
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    header {
+      background: rgba(22, 24, 29, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    header h1 {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.01em;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #ffffff 35%, #e2cfa8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    .zoom-controls {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-base);
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      padding: 4px;
+      gap: 4px;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+    }
+
+    .zoom-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-secondary);
+      padding: 6px 13px;
+      border-radius: 7px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .zoom-btn:hover {
+      background: var(--bg-elevated);
+      color: #ffffff;
+      border-color: var(--border-subtle);
+    }
+
+    .zoom-btn:active {
+      transform: scale(0.97);
+    }
+
+    #zoomReset {
+      color: var(--accent-gold);
+      background: rgba(212, 175, 106, 0.08);
+    }
+
+    #zoomReset:hover {
+      background: rgba(212, 175, 106, 0.16);
+      color: #f3d79b;
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      padding: 24px 32px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .timeline-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      box-shadow:
+        0 24px 48px -12px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .timeline-topbar {
+      padding: 14px 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, rgba(255, 255, 255, 0) 100%), var(--bg-elevated);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    .timeline-topbar > span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+    }
+
+    .timeline-topbar > span::before {
+      content: "↔";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: rgba(212, 175, 106, 0.12);
+      color: var(--accent-gold);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .legend {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 500;
+      color: #e4e6ec;
+      font-size: 0.78rem;
+      background: rgba(14, 15, 18, 0.55);
+      border: 1px solid var(--border-subtle);
+      padding: 5px 11px;
+      border-radius: 999px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .legend-item:hover {
+      border-color: var(--border-strong);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .legend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Scroll Area */
+    .timeline-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+      width: 100%;
+      padding: 28px 0 36px 0;
+      cursor: grab;
+      background-color: var(--bg-surface);
+      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+      scrollbar-width: thin;
+      scrollbar-color: #3a3f4d #14161b;
+    }
+
+    .timeline-scroll::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .timeline-scroll::-webkit-scrollbar-track {
+      background: #13151a;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .timeline-scroll::-webkit-scrollbar-thumb {
+      background: #333846;
+      border-radius: 999px;
+      border: 2px solid #13151a;
+    }
+
+    .timeline-scroll::-webkit-scrollbar-thumb:hover {
+      background: #4b5266;
+    }
+
+    .timeline-scroll:active {
+      cursor: grabbing;
+    }
+
+    .timeline-canvas {
+      position: relative;
+      height: 640px;
+      margin: 0 48px;
+    }
+
+    /* Separatori visivi tra nazioni */
+    .nation-lane-bg {
+      position: absolute;
+      left: 0;
+      right: 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.07);
+      pointer-events: none;
+    }
+
+    /* Griglia anni */
+    .year-tick {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-left: 1px dashed rgba(255, 255, 255, 0.045);
+      pointer-events: none;
+    }
+
+    .year-tick.major {
+      border-left: 1px solid rgba(255, 255, 255, 0.11);
+    }
+
+    .year-label {
+      position: absolute;
+      top: 324px;
+      transform: translateX(-50%);
+      background: #1d2028;
+      color: #f3e6cc;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 106, 0.35);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      z-index: 5;
+    }
+
+    /* Asse centrale */
+    .central-axis {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 337px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(212, 175, 106, 0.25), rgba(212, 175, 106, 0.65) 50%, rgba(212, 175, 106, 0.25));
+      box-shadow: 0 0 12px rgba(212, 175, 106, 0.25);
+      z-index: 2;
+    }
+
+    /* Barre Periodi e Governi */
+    .period-bar {
+      position: absolute;
+      height: 30px;
+      border-radius: 8px;
+      padding: 0 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(0, 0, 0, 0.18) 100%);
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), filter 0.18s ease, box-shadow 0.18s ease;
+      z-index: 4;
+      overflow: hidden;
+      white-space: nowrap;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+    }
+
+    .period-bar:hover {
+      transform: translateY(-2px) scale(1.005);
+      filter: brightness(1.14);
+      box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      z-index: 10;
+    }
+
+    .period-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .period-years {
+      font-size: 0.67rem;
+      opacity: 0.95;
+      font-weight: 600;
+      flex-shrink: 0;
+      background: rgba(0, 0, 0, 0.24);
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Eventi Puntuali (Sotto l'asse) */
+    .event-marker {
+      position: absolute;
+      top: 338px;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      z-index: 4;
+    }
+
+    .event-marker:hover {
+      z-index: 14;
+    }
+
+    .event-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2.5px solid var(--bg-surface);
+      margin-top: -6px;
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .event-marker:hover .event-dot {
+      transform: scale(1.35);
+    }
+
+    .event-stem {
+      width: 1.5px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.1) 100%);
+      transition: background 0.2s;
+    }
+
+    .event-marker:hover .event-stem {
+      background: rgba(212, 175, 106, 0.65);
+    }
+
+    .event-card {
+      background: linear-gradient(180deg, #252934 0%, #1d2029 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-left-width: 4px;
+      border-radius: 9px;
+      padding: 8px 11px;
+      width: 164px;
+      box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .event-marker:hover .event-card {
+      transform: translateY(3px);
+      background: linear-gradient(180deg, #2d3240 0%, #232732 100%);
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.6);
+    }
+
+    .event-year {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      filter: brightness(1.55) saturate(1.2) !important;
+    }
+
+    .event-name {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #f3f4f6;
+      line-height: 1.3;
+      margin-top: 3px;
+    }
+
+    /* Finestra Modale */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 8, 11, 0.78);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 50;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: linear-gradient(180deg, #222630 0%, #191c24 100%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 16px;
+      max-width: 520px;
+      width: 100%;
+      padding: 28px;
+      box-shadow:
+        0 28px 60px rgba(0, 0, 0, 0.75),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      animation: modalReveal 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalReveal {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .modal-badge {
+      display: inline-block;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 4px 12px;
+      border-radius: 999px;
+      color: #ffffff;
+      margin-bottom: 10px;
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(0, 0, 0, 0.16) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #ffffff;
+    }
+
+    .modal-close {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.18s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--border-strong);
+      color: #ffffff;
+      transform: rotate(90deg);
+    }
+
+    .modal-body {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #d5d8e2;
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding: 16px 20px;
+      }
+      main {
+        padding: 16px;
+      }
+      .timeline-topbar {
+        padding: 12px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>Cronologia Storica (1515 - 1680)</h1>
+      <p class="subtitle">Clicca su qualsiasi periodo o evento per visualizzare la descrizione</p>
+    </div>
+    <div class="zoom-controls">
+      <button class="zoom-btn" id="zoomOut">− Riduci</button>
+      <button class="zoom-btn" id="zoomReset">100%</button>
+      <button class="zoom-btn" id="zoomIn">+ Ingrandisci</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="timeline-card">
+      <div class="timeline-topbar">
+        <span>Scorri orizzontalmente per esplorare gli anni dal 1515 al 1680</span>
+        <div class="legend">
+          <div class="legend-item">
+            <span class="legend-swatch" style="background: #6c8453; color: #6c8453;"></span>
+            <span>Impero/Germania</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch" style="background: #8a568e; color: #8a568e;"></span>
+            <span>Stato della Chiesa</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch" style="background: #a38348; color: #a38348;"></span>
+            <span>Spagna</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch" style="background: #28568f; color: #28568f;"></span>
+            <span>Inghilterra</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch" style="background: #9f494c; color: #9f494c;"></span>
+            <span>Francia</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-scroll" id="timelineScroll">
+        <div class="timeline-canvas" id="timelineCanvas"></div>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <span class="modal-badge" id="modalBadge"></span>
+          <h3 class="modal-title" id="modalTitle"></h3>
+        </div>
+        <button class="modal-close" id="modalClose" aria-label="Chiudi">✕</button>
+      </div>
+      <p class="modal-body" id="modalDesc"></p>
+    </div>
+  </div>
+
+  <script>
+    const START_YEAR = 1515;
+    const END_YEAR = 1680;
+    let pixelsPerYear = 13;
+
+    // Periodi raggruppati per nazione/area in corsie esclusive (zero sovrapposizioni)
+    const periodi = [
+      // --- AREA 1: IMPERO / GERMANIA (Corsie 0 e 1) ---
+      {
+        titolo: "Riforma luterana",
+        inizio: 1517,
+        fine: 1521,
+        corsia: 0,
+        colore: "#6c8453",
+        descrizione: "Avvio della frattura religiosa in Germania con le tesi di Martin Lutero fino alla Dieta di Worms e alla sua scomunica."
+      },
+      {
+        titolo: "Epoca della confessionalizzazione e tensioni nell'Impero",
+        inizio: 1555,
+        fine: 1618,
+        corsia: 0,
+        colore: "#6c8453",
+        descrizione: "Periodo compreso tra la Pace di Augusta e lo scoppio della Guerra dei Trent'anni, caratterizzato dalla definizione delle confessioni religiose e crescenti tensioni politiche nell'Impero."
+      },
+      {
+        titolo: "Impero di Carlo V",
+        inizio: 1519,
+        fine: 1556,
+        corsia: 1,
+        colore: "#6c8453",
+        descrizione: "Regno di Carlo V d'Asburgo su un vasto impero europeo e coloniale, segnato dalla Riforma protestante e dalle guerre contro Francia e Ottomani."
+      },
+      {
+        titolo: "Guerra dei Trent'anni",
+        inizio: 1618,
+        fine: 1648,
+        corsia: 1,
+        colore: "#6c8453",
+        descrizione: "Conflitto europeo iniziato come scontro religioso nell'Impero germanico e trasformatosi in guerra per l'egemonia continentale fino alla Pace di Vestfalia."
+      },
+
+      // --- AREA 2: CHIESA / CONCILIO (Corsia 2) ---
+      {
+        titolo: "Concilio di Trento e Controriforma",
+        inizio: 1545,
+        fine: 1563,
+        corsia: 2,
+        colore: "#8a568e",
+        descrizione: "Concilio ecumenico convocato dalla Chiesa cattolica per riaffermare i dogmi tradizionali e riorganizzare la disciplina ecclesiastica in risposta al protestantesimo."
+      },
+
+      // --- AREA 3: SPAGNA / PAESI BASSI (Corsie 3 e 4) ---
+      {
+        titolo: "Regno di Filippo II",
+        inizio: 1556,
+        fine: 1598,
+        corsia: 3,
+        colore: "#a38348",
+        descrizione: "Governo del sovrano spagnolo, difensore dell'ortodossia cattolica, impegnato contro l'Impero Ottomano, i ribelli dei Paesi Bassi e l'Inghilterra."
+      },
+      {
+        titolo: "Rivolta dei Paesi Bassi",
+        inizio: 1566,
+        fine: 1581,
+        corsia: 4,
+        colore: "#a38348",
+        descrizione: "Insurrezione delle province dei Paesi Bassi contro il dominio e la pressione fiscale e religiosa di Filippo II di Spagna, culminata nella dichiarazione d'indipendenza."
+      },
+
+      // --- AREA 4: INGHILTERRA (Corsia 5 - sequenza continua senza sovrapposizioni) ---
+      {
+        titolo: "Fase della Riforma e regno dei Tudor",
+        inizio: 1534,
+        fine: 1558,
+        corsia: 5,
+        colore: "#28568f",
+        descrizione: "Periodo che va dallo scisma anglicano di Enrico VIII ai brevi regni di Edoardo VI e Maria I la Cattolica, segnato da profondi mutamenti religiosi in Inghilterra."
+      },
+      {
+        titolo: "Epoca elisabettiana",
+        inizio: 1558,
+        fine: 1603,
+        corsia: 5,
+        colore: "#28568f",
+        descrizione: "Regno di Elisabetta I, caratterizzato dal consolidamento dell'anglicanesimo, dalla fioritura culturale ed economica e dall'ascesa marittima dell'Inghilterra."
+      },
+
+      // --- AREA 5: FRANCIA (Corsia 6 - sequenza continua senza sovrapposizioni) ---
+      {
+        titolo: "Guerre di religione in Francia",
+        inizio: 1562,
+        fine: 1598,
+        corsia: 6,
+        colore: "#9f494c",
+        descrizione: "Conflitti civili tra cattolici e ugonotti (calvinisti francesi) che sconvolsero la Francia fino alla promulgazione dell'Editto di Nantes."
+      },
+      {
+        titolo: "Regno di Enrico IV",
+        inizio: 1598,
+        fine: 1610,
+        corsia: 6,
+        colore: "#9f494c",
+        descrizione: "Primo sovrano della dinastia dei Borbone: pacifica il regno dopo le guerre di religione e avvia la ricostruzione economica della Francia."
+      },
+      {
+        titolo: "Regno di Maria de' Medici e successivamente di Luigi XIII",
+        inizio: 1610,
+        fine: 1624,
+        corsia: 6,
+        colore: "#9f494c",
+        descrizione: "Periodo della reggenza di Maria de' Medici e dei primi anni di governo personale di Luigi XIII, segnato da instabilità interna prima dell'ascesa di Richelieu."
+      },
+      {
+        titolo: "Governo di Richelieu e assolutismo",
+        inizio: 1624,
+        fine: 1642,
+        corsia: 6,
+        colore: "#9f494c",
+        descrizione: "Azione politica del cardinale Richelieu come primo ministro di Luigi XIII volta a rafforzare il potere assoluto della monarchia francese e ridimensionare gli Asburgo."
+      }
+    ];
+
+    // Tutti gli 8 eventi puntuali presenti nella foto di riferimento
+    const eventi = [
+      {
+        anno: 1517,
+        dataEtichetta: "1517-10-31",
+        titolo: "Martin Lutero affige le 95 tesi",
+        livello: 0,
+        colore: "#6c8453",
+        descrizione: "Il 31 ottobre 1517 Martin Lutero rende note a Wittenberg le 95 tesi contro la vendita delle indulgenze, dando inizio alla Riforma protestante."
+      },
+      {
+        anno: 1534,
+        dataEtichetta: "1534",
+        titolo: "Atto di Supremazia di Enrico VIII",
+        livello: 1,
+        colore: "#28568f",
+        descrizione: "Il Parlamento inglese riconosce re Enrico VIII come Capo Supremo della Chiesa d'Inghilterra, sancendo lo scisma da Roma."
+      },
+      {
+        anno: 1555,
+        dataEtichetta: "1555",
+        titolo: "Pace di Augusta",
+        livello: 0,
+        colore: "#6c8453",
+        descrizione: "Accordo firmato nell'Impero germanico che stabilisce il principio 'cuius regio, eius religio' tra principi cattolici e luterani."
+      },
+      {
+        anno: 1571,
+        dataEtichetta: "1571-10-07",
+        titolo: "Battaglia di Lepanto",
+        livello: 1,
+        colore: "#a38348",
+        descrizione: "Il 7 ottobre 1571 la flotta cristiana della Lega Santa, guidata dalla Spagna, sconfigge la flotta dell'Impero Ottomano."
+      },
+      {
+        anno: 1572,
+        dataEtichetta: "1572",
+        titolo: "Strage di san Bartolomeo",
+        livello: 2,
+        colore: "#9f494c",
+        descrizione: "Massacro degli ugonotti a Parigi e in altre città francesi durante le guerre di religione."
+      },
+      {
+        anno: 1588,
+        dataEtichetta: "1588",
+        titolo: "Sconfitta dell'Invincibile Armata",
+        livello: 0,
+        colore: "#28568f",
+        descrizione: "La grande flotta spagnola inviata da Filippo II per invadere l'Inghilterra viene sconfitta dalla marina inglese di Elisabetta I."
+      },
+      {
+        anno: 1598,
+        dataEtichetta: "1598",
+        titolo: "Editto di Nantes",
+        livello: 1,
+        colore: "#9f494c",
+        descrizione: "Decreto emanato da Enrico IV che concede libertà di culto e garanzie politiche agli ugonotti, chiudendo le guerre di religione in Francia."
+      },
+      {
+        anno: 1648,
+        dataEtichetta: "1648",
+        titolo: "Pace di Vestfalia",
+        livello: 2,
+        colore: "#6c8453",
+        descrizione: "Insieme di trattati che pongono fine alla Guerra dei Trent'anni e ridisegnano gli equilibri politici e religiosi europei."
+      }
+    ];
+
+    const canvas = document.getElementById("timelineCanvas");
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalBadge = document.getElementById("modalBadge");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalClose = document.getElementById("modalClose");
+
+    function openModal(badgeText, badgeColor, title, description) {
+      modalBadge.textContent = badgeText;
+      modalBadge.style.backgroundColor = badgeColor;
+      modalTitle.textContent = title;
+      modalDesc.textContent = description;
+      modalBackdrop.classList.add("open");
+    }
+
+    modalClose.addEventListener("click", () => modalBackdrop.classList.remove("open"));
+    modalBackdrop.addEventListener("click", (e) => {
+      if (e.target === modalBackdrop) modalBackdrop.classList.remove("open");
+    });
+
+    function renderTimeline() {
+      canvas.innerHTML = "";
+      const totalWidth = (END_YEAR - START_YEAR) * pixelsPerYear;
+      canvas.style.width = totalWidth + "px";
+
+      // Linee sottili di separazione tra le fasce delle nazioni (dopo corsia 1, 2, 4, 5)
+      const groupDividers = [1, 2, 4, 5];
+      groupDividers.forEach((laneIdx) => {
+        const divider = document.createElement("div");
+        divider.className = "nation-lane-bg";
+        divider.style.top = (14 + laneIdx * 42 + 34) + "px";
+        canvas.appendChild(divider);
+      });
+
+      // Asse centrale
+      const axis = document.createElement("div");
+      axis.className = "central-axis";
+      canvas.appendChild(axis);
+
+      // Tacche anni (ogni 5 anni, etichetta ogni 10)
+      for (let year = START_YEAR; year <= END_YEAR; year += 5) {
+        const x = (year - START_YEAR) * pixelsPerYear;
+        const isMajor = year % 10 === 0;
+
+        const tick = document.createElement("div");
+        tick.className = "year-tick" + (isMajor ? " major" : "");
+        tick.style.left = x + "px";
+        canvas.appendChild(tick);
+
+        if (isMajor || pixelsPerYear >= 18) {
+          const label = document.createElement("div");
+          label.className = "year-label";
+          label.style.left = x + "px";
+          label.textContent = year;
+          canvas.appendChild(label);
+        }
+      }
+
+      // Periodi (sopra l'asse)
+      periodi.forEach((p) => {
+        const left = (p.inizio - START_YEAR) * pixelsPerYear;
+        const width = Math.max((p.fine - p.inizio) * pixelsPerYear, 36);
+        const top = 14 + p.corsia * 42;
+
+        const bar = document.createElement("div");
+        bar.className = "period-bar";
+        bar.style.left = left + "px";
+        bar.style.width = width + "px";
+        bar.style.top = top + "px";
+        bar.style.backgroundColor = p.colore;
+        bar.title = `${p.inizio} / ${p.fine} — ${p.titolo}`;
+
+        bar.innerHTML = `
+          <span class="period-title">${p.titolo}</span>
+          <span class="period-years">${p.inizio} / ${p.fine}</span>
+        `;
+
+        bar.addEventListener("click", () => {
+          openModal(
+            `${p.inizio} / ${p.fine}`,
+            p.colore,
+            p.titolo,
+            p.descrizione
+          );
+        });
+
+        canvas.appendChild(bar);
+      });
+
+      // Eventi puntuali (sotto l'asse)
+      eventi.forEach((ev) => {
+        const left = (ev.anno - START_YEAR) * pixelsPerYear;
+        const stemHeights = [24, 92, 160];
+        const stemHeight = stemHeights[ev.livello] || 24;
+
+        const marker = document.createElement("div");
+        marker.className = "event-marker";
+        marker.style.left = left + "px";
+
+        marker.innerHTML = `
+          <div class="event-dot" style="background: ${ev.colore}; box-shadow: 0 0 0 2px ${ev.colore};"></div>
+          <div class="event-stem" style="height: ${stemHeight}px;"></div>
+          <div class="event-card" style="border-left-color: ${ev.colore};">
+            <div class="event-year" style="color: ${ev.colore}; filter: brightness(1.35);">${ev.dataEtichetta}</div>
+            <div class="event-name">${ev.titolo}</div>
+          </div>
+        `;
+
+        marker.addEventListener("click", () => {
+          openModal(ev.dataEtichetta, ev.colore, ev.titolo, ev.descrizione);
+        });
+
+        canvas.appendChild(marker);
+      });
+    }
+
+    document.getElementById("zoomIn").addEventListener("click", () => {
+      pixelsPerYear = Math.min(28, pixelsPerYear + 3);
+      renderTimeline();
+    });
+
+    document.getElementById("zoomOut").addEventListener("click", () => {
+      pixelsPerYear = Math.max(8, pixelsPerYear - 3);
+      renderTimeline();
+    });
+
+    document.getElementById("zoomReset").addEventListener("click", () => {
+      pixelsPerYear = 13;
+      renderTimeline();
+    });
+
+    // Scorrimento con trascinamento mouse
+    const scrollBox = document.getElementById("timelineScroll");
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    scrollBox.addEventListener("mousedown", (e) => {
+      isDown = true;
+      startX = e.pageX - scrollBox.offsetLeft;
+      scrollLeft = scrollBox.scrollLeft;
+    });
+    scrollBox.addEventListener("mouseleave", () => (isDown = false));
+    scrollBox.addEventListener("mouseup", () => (isDown = false));
+    scrollBox.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - scrollBox.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      scrollBox.scrollLeft = scrollLeft - walk;
+    });
+
+    renderTimeline();
+  </script>
+</body>
+</html>
