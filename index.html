@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="it" class="dark">
+<html lang="it">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Atlante Storico (1515 - 1680) — Cronologia Interattiva</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
   <style>
     :root {
-      --bg-deep: #090a0f;
-      --bg-glass: rgba(18, 20, 28, 0.85);
-      --border-glass: rgba(212, 175, 106, 0.15);
-      --border-glass-strong: rgba(212, 175, 106, 0.35);
-      --gold: #d4af6a;
-      --gold-light: #f3e6cc;
-      --gold-dim: rgba(212, 175, 106, 0.12);
-      --text-main: #f3f4f6;
-      --text-muted: #949ab0;
+      --bg-paper: #f7f4ed;
+      --bg-surface: rgba(255, 253, 249, 0.92);
+      --border-ink: rgba(138, 102, 41, 0.18);
+      --border-ink-strong: rgba(138, 102, 41, 0.42);
+      --accent-bronze: #8a6629;
+      --accent-bronze-dark: #5c4217;
+      --accent-tint: rgba(138, 102, 41, 0.1);
+      --text-main: #181a20;
+      --text-muted: #5a6070;
     }
 
     * {
@@ -29,24 +29,24 @@
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-deep);
+      background-color: var(--bg-paper);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(circle at 50% -20%, rgba(212, 175, 106, 0.12), transparent 60%),
+        radial-gradient(circle at 50% -15%, rgba(138, 102, 41, 0.14), transparent 60%),
         radial-gradient(circle at 10% 90%, rgba(40, 86, 143, 0.08), transparent 50%),
         radial-gradient(circle at 90% 80%, rgba(138, 86, 142, 0.08), transparent 50%);
     }
 
     /* Header e Navigazione Superiore */
     header {
-      background: var(--bg-glass);
+      background: var(--bg-surface);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-glass);
+      border-bottom: 1px solid var(--border-ink);
       padding: 20px 36px;
       display: flex;
       align-items: center;
@@ -56,7 +56,7 @@
       position: sticky;
       top: 0;
       z-index: 30;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 8px 25px rgba(24, 26, 32, 0.06);
     }
 
     .brand-area {
@@ -69,13 +69,13 @@
       width: 48px;
       height: 48px;
       border-radius: 12px;
-      background: linear-gradient(135deg, rgba(212, 175, 106, 0.2), rgba(212, 175, 106, 0.05));
-      border: 1px solid var(--border-glass-strong);
+      background: linear-gradient(135deg, rgba(138, 102, 41, 0.15), rgba(138, 102, 41, 0.04));
+      border: 1px solid var(--border-ink-strong);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--gold);
-      box-shadow: 0 0 15px rgba(212, 175, 106, 0.15);
+      color: var(--accent-bronze);
+      box-shadow: 0 4px 12px rgba(138, 102, 41, 0.12);
     }
 
     h1 {
@@ -83,7 +83,7 @@
       font-size: 1.75rem;
       font-weight: 700;
       letter-spacing: 0.04em;
-      background: linear-gradient(135deg, #ffffff 40%, var(--gold-light) 100%);
+      background: linear-gradient(135deg, #181a20 35%, var(--accent-bronze) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -92,7 +92,7 @@
       font-size: 0.82rem;
       color: var(--text-muted);
       margin-top: 3px;
-      font-weight: 400;
+      font-weight: 500;
       letter-spacing: 0.01em;
     }
 
@@ -110,20 +110,25 @@
     }
 
     .search-box input {
-      background: rgba(14, 16, 22, 0.8);
-      border: 1px solid var(--border-glass);
+      background: #ffffff;
+      border: 1px solid var(--border-ink);
       border-radius: 10px;
       padding: 8px 14px 8px 38px;
       color: var(--text-main);
       font-size: 0.85rem;
       width: 220px;
       transition: all 0.2s ease;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .search-box input::placeholder {
+      color: #8f95a5;
     }
 
     .search-box input:focus {
       outline: none;
-      border-color: var(--gold);
-      box-shadow: 0 0 12px rgba(212, 175, 106, 0.2);
+      border-color: var(--accent-bronze);
+      box-shadow: 0 0 0 3px rgba(138, 102, 41, 0.14);
       width: 260px;
     }
 
@@ -138,16 +143,17 @@
     .zoom-group {
       display: inline-flex;
       align-items: center;
-      background: rgba(14, 16, 22, 0.8);
-      border: 1px solid var(--border-glass);
+      background: #ffffff;
+      border: 1px solid var(--border-ink);
       border-radius: 10px;
       padding: 4px;
       gap: 4px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     }
 
     .zoom-btn {
       background: transparent;
-      border: none;
+      border: 1px solid transparent;
       color: var(--text-muted);
       padding: 6px 12px;
       border-radius: 7px;
@@ -161,14 +167,14 @@
     }
 
     .zoom-btn:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(24, 26, 32, 0.05);
       color: var(--text-main);
     }
 
     .zoom-btn.active-zoom {
-      background: var(--gold-dim);
-      color: var(--gold);
-      border: 1px solid var(--border-glass);
+      background: var(--accent-tint);
+      color: var(--accent-bronze-dark);
+      border-color: var(--border-ink);
     }
 
     /* Struttura Principale */
@@ -181,10 +187,10 @@
     }
 
     .atlas-container {
-      background: var(--bg-glass);
-      border: 1px solid var(--border-glass);
+      background: #ffffff;
+      border: 1px solid var(--border-ink);
       border-radius: 20px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.05);
+      box-shadow: 0 20px 50px rgba(24, 26, 32, 0.08), inset 0 1px 0 #ffffff;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -192,8 +198,8 @@
 
     .atlas-header {
       padding: 16px 28px;
-      background: rgba(14, 16, 22, 0.6);
-      border-bottom: 1px solid var(--border-glass);
+      background: #fcfaf6;
+      border-bottom: 1px solid var(--border-ink);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -207,10 +213,11 @@
       gap: 8px;
       font-size: 0.82rem;
       color: var(--text-muted);
+      font-weight: 500;
     }
 
     .nav-instruction i {
-      color: var(--gold);
+      color: var(--accent-bronze);
     }
 
     .legends-bar {
@@ -228,28 +235,30 @@
       font-weight: 600;
       padding: 5px 12px;
       border-radius: 999px;
-      background: rgba(14, 16, 22, 0.7);
-      border: 1px solid var(--border-glass);
+      background: #ffffff;
+      border: 1px solid var(--border-ink);
       color: var(--text-main);
       cursor: pointer;
       transition: all 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
     }
 
     .legend-chip:hover {
-      border-color: var(--gold);
+      border-color: var(--accent-bronze);
       transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
     }
 
     .legend-chip.inactive {
-      opacity: 0.35;
-      filter: grayscale(80%);
+      opacity: 0.4;
+      filter: grayscale(85%);
+      background: #f2efe9;
     }
 
     .swatch {
-      width: 8px;
-      height: 8px;
+      width: 9px;
+      height: 9px;
       border-radius: 50%;
-      box-shadow: 0 0 8px currentColor;
     }
 
     /* Area Scrollabile della Timeline */
@@ -259,10 +268,11 @@
       width: 100%;
       padding: 30px 0 45px 0;
       cursor: grab;
-      background-image: radial-gradient(rgba(212, 175, 106, 0.04) 1px, transparent 1px);
+      background-color: #ffffff;
+      background-image: radial-gradient(rgba(138, 102, 41, 0.14) 1px, transparent 1px);
       background-size: 24px 24px;
       scrollbar-width: thin;
-      scrollbar-color: var(--gold) rgba(14, 16, 22, 0.9);
+      scrollbar-color: var(--accent-bronze) #f2efe9;
     }
 
     .timeline-viewport::-webkit-scrollbar {
@@ -270,14 +280,18 @@
     }
 
     .timeline-viewport::-webkit-scrollbar-track {
-      background: rgba(14, 16, 22, 0.9);
-      border-top: 1px solid var(--border-glass);
+      background: #f2efe9;
+      border-top: 1px solid var(--border-ink);
     }
 
     .timeline-viewport::-webkit-scrollbar-thumb {
-      background: var(--gold);
+      background: #b8985e;
       border-radius: 999px;
-      border: 2px solid rgba(14, 16, 22, 0.9);
+      border: 2px solid #f2efe9;
+    }
+
+    .timeline-viewport::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-bronze);
     }
 
     .timeline-viewport:active {
@@ -290,7 +304,7 @@
       margin: 0 60px;
     }
 
-    /* Etichette Corsie Lateralí (Aree Geografiche/Politiche) */
+    /* Etichette Corsie Laterali (Aree Geografiche/Politiche) */
     .lane-label-track {
       position: absolute;
       left: -190px;
@@ -311,10 +325,10 @@
       font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: var(--gold-light);
+      color: var(--accent-bronze-dark);
       padding-right: 12px;
-      border-right: 2px solid var(--gold);
-      background: linear-gradient(90deg, transparent, rgba(212, 175, 106, 0.05));
+      border-right: 2px solid var(--accent-bronze);
+      background: linear-gradient(90deg, transparent, rgba(138, 102, 41, 0.08));
     }
 
     /* Sfondi Corsie Orizzontali */
@@ -322,7 +336,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+      border-bottom: 1px dashed rgba(24, 26, 32, 0.09);
       pointer-events: none;
     }
 
@@ -331,27 +345,27 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      border-left: 1px dashed rgba(255, 255, 255, 0.04);
+      border-left: 1px dashed rgba(24, 26, 32, 0.07);
       pointer-events: none;
     }
 
     .grid-tick.major {
-      border-left: 1px solid rgba(255, 255, 255, 0.09);
+      border-left: 1px solid rgba(24, 26, 32, 0.14);
     }
 
     .year-badge-node {
       position: absolute;
       top: 342px;
       transform: translateX(-50%);
-      background: linear-gradient(135deg, #181b24, #101218);
-      color: var(--gold-light);
+      background: linear-gradient(135deg, #ffffff, #f7f4ed);
+      color: var(--accent-bronze-dark);
       font-family: 'Cinzel', serif;
       font-size: 0.75rem;
       font-weight: 700;
       padding: 5px 12px;
       border-radius: 999px;
-      border: 1px solid var(--border-glass-strong);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      border: 1px solid var(--border-ink-strong);
+      box-shadow: 0 3px 10px rgba(24, 26, 32, 0.1);
       z-index: 6;
     }
 
@@ -362,8 +376,8 @@
       right: 0;
       top: 358px;
       height: 3px;
-      background: linear-gradient(90deg, transparent, var(--gold) 15%, #ffffff 50%, var(--gold) 85%, transparent);
-      box-shadow: 0 0 15px rgba(212, 175, 106, 0.4);
+      background: linear-gradient(90deg, transparent, var(--accent-bronze) 15%, #3d2c10 50%, var(--accent-bronze) 85%, transparent);
+      box-shadow: 0 2px 8px rgba(138, 102, 41, 0.25);
       z-index: 3;
     }
 
@@ -381,22 +395,22 @@
       font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
-      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(0, 0, 0, 0.22) 100%);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(0, 0, 0, 0.14) 100%);
+      box-shadow: 0 5px 14px rgba(24, 26, 32, 0.16), inset 0 1px 0 rgba(255,255,255,0.35);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 5;
       overflow: hidden;
       white-space: nowrap;
-      border: 1px solid rgba(255,255,255,0.2);
-      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.45);
     }
 
     .historical-period-bar:hover {
       transform: translateY(-3px) scale(1.008);
-      filter: brightness(1.2);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.4);
+      filter: brightness(1.08);
+      box-shadow: 0 10px 24px rgba(24, 26, 32, 0.25), inset 0 1px 0 rgba(255,255,255,0.45);
       z-index: 15;
-      border-color: #ffffff;
+      border-color: #181a20;
     }
 
     .period-label-text {
@@ -407,12 +421,12 @@
     .period-range-tag {
       font-size: 0.68rem;
       font-weight: 700;
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(0, 0, 0, 0.26);
       padding: 3px 7px;
       border-radius: 5px;
       letter-spacing: 0.03em;
       flex-shrink: 0;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
     }
 
     /* Eventi Puntuali (Sotto l'asse) */
@@ -435,44 +449,44 @@
       width: 13px;
       height: 13px;
       border-radius: 50%;
-      border: 2.5px solid var(--bg-deep);
+      border: 2.5px solid #ffffff;
       margin-top: -6px;
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .historical-event-node:hover .event-dot-marker {
-      transform: scale(1.5);
+      transform: scale(1.45);
     }
 
     .event-connector-stem {
       width: 2px;
-      background: linear-gradient(180deg, rgba(212, 175, 106, 0.6) 0%, rgba(255, 255, 255, 0.15) 100%);
+      background: linear-gradient(180deg, rgba(138, 102, 41, 0.65) 0%, rgba(24, 26, 32, 0.15) 100%);
       transition: background 0.2s;
     }
 
     .historical-event-card {
-      background: linear-gradient(180deg, #1b1e28 0%, #13151c 100%);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(180deg, #ffffff 0%, #faf8f3 100%);
+      border: 1px solid rgba(24, 26, 32, 0.12);
       border-left-width: 4px;
       border-radius: 10px;
       padding: 10px 12px;
       width: 174px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+      box-shadow: 0 8px 20px rgba(24, 26, 32, 0.09), inset 0 1px 0 #ffffff;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .historical-event-node:hover .historical-event-card {
       transform: translateY(4px) scale(1.03);
-      background: linear-gradient(180deg, #242835, #191c25);
-      border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 16px 35px rgba(0,0,0,0.7);
+      background: #ffffff;
+      border-color: rgba(24, 26, 32, 0.28);
+      box-shadow: 0 14px 30px rgba(24, 26, 32, 0.16);
     }
 
     .event-card-date {
       font-size: 0.71rem;
       font-weight: 700;
       letter-spacing: 0.03em;
-      filter: brightness(1.6) saturate(1.3);
+      filter: brightness(0.85) saturate(1.2);
     }
 
     .event-card-title {
@@ -487,7 +501,7 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(5, 6, 9, 0.82);
+      background: rgba(24, 26, 32, 0.55);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       display: none;
@@ -505,13 +519,13 @@
     }
 
     .modal-window {
-      background: linear-gradient(180deg, #1c202d 0%, #11131a 100%);
-      border: 1px solid var(--border-glass-strong);
+      background: linear-gradient(180deg, #ffffff 0%, #f9f7f2 100%);
+      border: 1px solid var(--border-ink-strong);
       border-radius: 20px;
       max-width: 560px;
       width: 100%;
       padding: 32px;
-      box-shadow: 0 35px 70px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.12);
+      box-shadow: 0 30px 60px rgba(24, 26, 32, 0.25), inset 0 1px 0 #ffffff;
       transform: translateY(15px) scale(0.95);
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
@@ -528,7 +542,7 @@
       gap: 16px;
       margin-bottom: 20px;
       padding-bottom: 16px;
-      border-bottom: 1px solid var(--border-glass);
+      border-bottom: 1px solid var(--border-ink);
     }
 
     .modal-category-badge {
@@ -541,8 +555,8 @@
       border-radius: 999px;
       color: #ffffff;
       margin-bottom: 10px;
-      border: 1px solid rgba(255,255,255,0.25);
-      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.35);
     }
 
     .modal-headline {
@@ -550,12 +564,12 @@
       font-size: 1.6rem;
       font-weight: 700;
       line-height: 1.25;
-      color: #ffffff;
+      color: var(--text-main);
     }
 
     .modal-close-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-glass);
+      background: rgba(24, 26, 32, 0.04);
+      border: 1px solid var(--border-ink);
       width: 38px;
       height: 38px;
       border-radius: 12px;
@@ -570,16 +584,16 @@
     }
 
     .modal-close-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: var(--gold);
-      color: #ffffff;
+      background: rgba(24, 26, 32, 0.09);
+      border-color: var(--accent-bronze);
+      color: var(--text-main);
       transform: rotate(90deg);
     }
 
     .modal-content-body {
       font-size: 0.96rem;
       line-height: 1.75;
-      color: #d1d5db;
+      color: #363b47;
     }
 
     /* Responsive */
@@ -682,13 +696,13 @@
       { id: 6, title: "Francia" }
     ];
 
-    // Colori per categorie
+    // Colori per categorie (leggermente più saturi per risaltare su fondo chiaro)
     const categories = {
-      impero: { name: "Impero / Germania", color: "#6c8453" },
-      chiesa: { name: "Stato della Chiesa", color: "#8a568e" },
-      spagna: { name: "Spagna & Fiandre", color: "#a38348" },
-      inghilterra: { name: "Inghilterra", color: "#28568f" },
-      francia: { name: "Francia", color: "#9f494c" }
+      impero: { name: "Impero / Germania", color: "#5c7542" },
+      chiesa: { name: "Stato della Chiesa", color: "#7d4882" },
+      spagna: { name: "Spagna & Fiandre", color: "#997636" },
+      inghilterra: { name: "Inghilterra", color: "#214c82" },
+      francia: { name: "Francia", color: "#943b3e" }
     };
 
     const periodi = [
@@ -865,7 +879,6 @@
       }
     ];
 
-    // Stato filtri attivi per categorie
     const activeFilters = {
       impero: true,
       chiesa: true,
@@ -890,7 +903,7 @@
         const chip = document.createElement("div");
         chip.className = `legend-chip ${activeFilters[key] ? '' : 'inactive'}`;
         chip.innerHTML = `
-          <span class="swatch" style="background: ${cat.color}; color: ${cat.color};"></span>
+          <span class="swatch" style="background: ${cat.color};"></span>
           <span>${cat.name}</span>
         `;
         chip.addEventListener("click", () => {
@@ -920,7 +933,6 @@
       const totalWidth = (END_YEAR - START_YEAR) * pixelsPerYear;
       canvas.style.width = totalWidth + "px";
 
-      // 1. Renderizza le etichette delle corsie laterali sulla sinistra
       const labelTrack = document.createElement("div");
       labelTrack.className = "lane-label-track";
       lanes.forEach(lane => {
@@ -932,7 +944,6 @@
       });
       canvas.appendChild(labelTrack);
 
-      // 2. Linee divisorie orizzontali delle corsie
       lanes.forEach((_, idx) => {
         if(idx > 0) {
           const divider = document.createElement("div");
@@ -942,12 +953,10 @@
         }
       });
 
-      // 3. Asse centrale
       const axis = document.createElement("div");
       axis.className = "central-timeline-axis";
       canvas.appendChild(axis);
 
-      // 4. Tacche e griglia anni (ogni 5 anni)
       for (let year = START_YEAR; year <= END_YEAR; year += 5) {
         const x = (year - START_YEAR) * pixelsPerYear;
         const isMajor = year % 10 === 0;
@@ -968,7 +977,6 @@
 
       const searchQuery = searchInput.value.toLowerCase().trim();
 
-      // 5. Renderizza i periodi storici (Sopra l'asse)
       periodi.forEach(p => {
         if (!activeFilters[p.categoria]) return;
 
@@ -988,10 +996,10 @@
         bar.style.top = top + "px";
         bar.style.backgroundColor = color;
         if (searchQuery && matchesSearch) {
-          bar.style.boxShadow = "0 0 20px #ffffff, inset 0 1px 0 rgba(255,255,255,0.5)";
-          bar.style.borderColor = "#ffffff";
+          bar.style.boxShadow = "0 0 0 3px #8a6629, 0 8px 20px rgba(24,26,32,0.3)";
+          bar.style.borderColor = "#181a20";
         } else if (searchQuery && !matchesSearch) {
-          bar.style.opacity = "0.2";
+          bar.style.opacity = "0.22";
         }
 
         bar.innerHTML = `
@@ -1006,7 +1014,6 @@
         canvas.appendChild(bar);
       });
 
-      // 6. Renderizza gli eventi puntuali (Sotto l'asse)
       eventi.forEach(ev => {
         if (!activeFilters[ev.categoria]) return;
 
@@ -1024,11 +1031,11 @@
         marker.className = "historical-event-node";
         marker.style.left = left + "px";
         if (searchQuery && !matchesSearch) {
-          marker.style.opacity = "0.2";
+          marker.style.opacity = "0.22";
         }
 
         marker.innerHTML = `
-          <div class="event-dot-marker" style="background: ${color}; box-shadow: 0 0 12px ${color};"></div>
+          <div class="event-dot-marker" style="background: ${color}; box-shadow: 0 0 0 2px ${color};"></div>
           <div class="event-connector-stem" style="height: ${stemHeight}px;"></div>
           <div class="historical-event-card" style="border-left-color: ${color};">
             <div class="event-card-date" style="color: ${color};">${ev.dataEtichetta}</div>
@@ -1044,7 +1051,6 @@
       });
     }
 
-    // Gestione pulsanti Zoom
     const zoomInBtn = document.getElementById("zoomIn");
     const zoomOutBtn = document.getElementById("zoomOut");
     const zoomResetBtn = document.getElementById("zoomReset");
@@ -1081,7 +1087,6 @@
       renderTimeline();
     });
 
-    // Trascina per scorrere la viewport (Drag-to-scroll)
     const scrollViewport = document.getElementById("timelineScroll");
     let isDragging = false;
     let startXPos, scrollLeftPos;
@@ -1103,7 +1108,6 @@
       scrollViewport.scrollLeft = scrollLeftPos - walk;
     });
 
-    // Avvio iniziale
     renderLegends();
     renderTimeline();
   </script>
