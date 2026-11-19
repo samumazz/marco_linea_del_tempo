@@ -6,19 +6,20 @@
   <title>Atlante Storico (1515 - 1680) — Cronologia Interattiva</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
   <style>
     :root {
-      --bg-paper: #f7f4ed;
-      --bg-surface: rgba(255, 253, 249, 0.92);
-      --border-ink: rgba(138, 102, 41, 0.18);
-      --border-ink-strong: rgba(138, 102, 41, 0.42);
-      --accent-bronze: #8a6629;
-      --accent-bronze-dark: #5c4217;
-      --accent-tint: rgba(138, 102, 41, 0.1);
-      --text-main: #181a20;
-      --text-muted: #5a6070;
+      /* Complementari esatti (255 - RGB) dei colori originali */
+      --bg-deep: #f6f5f0;
+      --bg-glass: rgba(237, 235, 227, 0.85);
+      --border-glass: rgba(43, 80, 149, 0.15);
+      --border-glass-strong: rgba(43, 80, 149, 0.35);
+      --gold: #2b5095;
+      --gold-light: #0c1933;
+      --gold-dim: rgba(43, 80, 149, 0.12);
+      --text-main: #0c0b09;
+      --text-muted: #6b654f;
     }
 
     * {
@@ -29,24 +30,24 @@
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-paper);
+      background-color: var(--bg-deep);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(circle at 50% -15%, rgba(138, 102, 41, 0.14), transparent 60%),
-        radial-gradient(circle at 10% 90%, rgba(40, 86, 143, 0.08), transparent 50%),
-        radial-gradient(circle at 90% 80%, rgba(138, 86, 142, 0.08), transparent 50%);
+        radial-gradient(circle at 50% -20%, rgba(43, 80, 149, 0.12), transparent 60%),
+        radial-gradient(circle at 10% 90%, rgba(215, 169, 112, 0.08), transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(117, 169, 113, 0.08), transparent 50%);
     }
 
     /* Header e Navigazione Superiore */
     header {
-      background: var(--bg-surface);
+      background: var(--bg-glass);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-ink);
+      border-bottom: 1px solid var(--border-glass);
       padding: 20px 36px;
       display: flex;
       align-items: center;
@@ -56,7 +57,7 @@
       position: sticky;
       top: 0;
       z-index: 30;
-      box-shadow: 0 8px 25px rgba(24, 26, 32, 0.06);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.5);
     }
 
     .brand-area {
@@ -69,13 +70,13 @@
       width: 48px;
       height: 48px;
       border-radius: 12px;
-      background: linear-gradient(135deg, rgba(138, 102, 41, 0.15), rgba(138, 102, 41, 0.04));
-      border: 1px solid var(--border-ink-strong);
+      background: linear-gradient(135deg, rgba(43, 80, 149, 0.2), rgba(43, 80, 149, 0.05));
+      border: 1px solid var(--border-glass-strong);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--accent-bronze);
-      box-shadow: 0 4px 12px rgba(138, 102, 41, 0.12);
+      color: var(--gold);
+      box-shadow: 0 0 15px rgba(43, 80, 149, 0.15);
     }
 
     h1 {
@@ -83,7 +84,7 @@
       font-size: 1.75rem;
       font-weight: 700;
       letter-spacing: 0.04em;
-      background: linear-gradient(135deg, #181a20 35%, var(--accent-bronze) 100%);
+      background: linear-gradient(135deg, #000000 40%, var(--gold-light) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -92,7 +93,7 @@
       font-size: 0.82rem;
       color: var(--text-muted);
       margin-top: 3px;
-      font-weight: 500;
+      font-weight: 400;
       letter-spacing: 0.01em;
     }
 
@@ -110,25 +111,20 @@
     }
 
     .search-box input {
-      background: #ffffff;
-      border: 1px solid var(--border-ink);
+      background: rgba(241, 239, 233, 0.8);
+      border: 1px solid var(--border-glass);
       border-radius: 10px;
       padding: 8px 14px 8px 38px;
       color: var(--text-main);
       font-size: 0.85rem;
       width: 220px;
       transition: all 0.2s ease;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
-    }
-
-    .search-box input::placeholder {
-      color: #8f95a5;
     }
 
     .search-box input:focus {
       outline: none;
-      border-color: var(--accent-bronze);
-      box-shadow: 0 0 0 3px rgba(138, 102, 41, 0.14);
+      border-color: var(--gold);
+      box-shadow: 0 0 12px rgba(43, 80, 149, 0.2);
       width: 260px;
     }
 
@@ -143,17 +139,16 @@
     .zoom-group {
       display: inline-flex;
       align-items: center;
-      background: #ffffff;
-      border: 1px solid var(--border-ink);
+      background: rgba(241, 239, 233, 0.8);
+      border: 1px solid var(--border-glass);
       border-radius: 10px;
       padding: 4px;
       gap: 4px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     }
 
     .zoom-btn {
       background: transparent;
-      border: 1px solid transparent;
+      border: none;
       color: var(--text-muted);
       padding: 6px 12px;
       border-radius: 7px;
@@ -167,14 +162,14 @@
     }
 
     .zoom-btn:hover {
-      background: rgba(24, 26, 32, 0.05);
+      background: rgba(0, 0, 0, 0.05);
       color: var(--text-main);
     }
 
     .zoom-btn.active-zoom {
-      background: var(--accent-tint);
-      color: var(--accent-bronze-dark);
-      border-color: var(--border-ink);
+      background: var(--gold-dim);
+      color: var(--gold);
+      border: 1px solid var(--border-glass);
     }
 
     /* Struttura Principale */
@@ -187,10 +182,10 @@
     }
 
     .atlas-container {
-      background: #ffffff;
-      border: 1px solid var(--border-ink);
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
       border-radius: 20px;
-      box-shadow: 0 20px 50px rgba(24, 26, 32, 0.08), inset 0 1px 0 #ffffff;
+      box-shadow: 0 30px 60px rgba(255, 255, 255, 0.7), inset 0 1px 0 rgba(0, 0, 0, 0.05);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -198,8 +193,8 @@
 
     .atlas-header {
       padding: 16px 28px;
-      background: #fcfaf6;
-      border-bottom: 1px solid var(--border-ink);
+      background: rgba(241, 239, 233, 0.6);
+      border-bottom: 1px solid var(--border-glass);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -213,11 +208,10 @@
       gap: 8px;
       font-size: 0.82rem;
       color: var(--text-muted);
-      font-weight: 500;
     }
 
     .nav-instruction i {
-      color: var(--accent-bronze);
+      color: var(--gold);
     }
 
     .legends-bar {
@@ -235,30 +229,28 @@
       font-weight: 600;
       padding: 5px 12px;
       border-radius: 999px;
-      background: #ffffff;
-      border: 1px solid var(--border-ink);
+      background: rgba(241, 239, 233, 0.7);
+      border: 1px solid var(--border-glass);
       color: var(--text-main);
       cursor: pointer;
       transition: all 0.2s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
     }
 
     .legend-chip:hover {
-      border-color: var(--accent-bronze);
+      border-color: var(--gold);
       transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
     }
 
     .legend-chip.inactive {
-      opacity: 0.4;
-      filter: grayscale(85%);
-      background: #f2efe9;
+      opacity: 0.35;
+      filter: grayscale(80%);
     }
 
     .swatch {
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
+      box-shadow: 0 0 8px currentColor;
     }
 
     /* Area Scrollabile della Timeline */
@@ -268,11 +260,10 @@
       width: 100%;
       padding: 30px 0 45px 0;
       cursor: grab;
-      background-color: #ffffff;
-      background-image: radial-gradient(rgba(138, 102, 41, 0.14) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(43, 80, 149, 0.08) 1px, transparent 1px);
       background-size: 24px 24px;
       scrollbar-width: thin;
-      scrollbar-color: var(--accent-bronze) #f2efe9;
+      scrollbar-color: var(--gold) rgba(241, 239, 233, 0.9);
     }
 
     .timeline-viewport::-webkit-scrollbar {
@@ -280,18 +271,14 @@
     }
 
     .timeline-viewport::-webkit-scrollbar-track {
-      background: #f2efe9;
-      border-top: 1px solid var(--border-ink);
+      background: rgba(241, 239, 233, 0.9);
+      border-top: 1px solid var(--border-glass);
     }
 
     .timeline-viewport::-webkit-scrollbar-thumb {
-      background: #b8985e;
+      background: var(--gold);
       border-radius: 999px;
-      border: 2px solid #f2efe9;
-    }
-
-    .timeline-viewport::-webkit-scrollbar-thumb:hover {
-      background: var(--accent-bronze);
+      border: 2px solid rgba(241, 239, 233, 0.9);
     }
 
     .timeline-viewport:active {
@@ -325,10 +312,10 @@
       font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: var(--accent-bronze-dark);
+      color: var(--gold-light);
       padding-right: 12px;
-      border-right: 2px solid var(--accent-bronze);
-      background: linear-gradient(90deg, transparent, rgba(138, 102, 41, 0.08));
+      border-right: 2px solid var(--gold);
+      background: linear-gradient(90deg, transparent, rgba(43, 80, 149, 0.05));
     }
 
     /* Sfondi Corsie Orizzontali */
@@ -336,7 +323,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      border-bottom: 1px dashed rgba(24, 26, 32, 0.09);
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
       pointer-events: none;
     }
 
@@ -345,27 +332,27 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      border-left: 1px dashed rgba(24, 26, 32, 0.07);
+      border-left: 1px dashed rgba(0, 0, 0, 0.04);
       pointer-events: none;
     }
 
     .grid-tick.major {
-      border-left: 1px solid rgba(24, 26, 32, 0.14);
+      border-left: 1px solid rgba(0, 0, 0, 0.09);
     }
 
     .year-badge-node {
       position: absolute;
       top: 342px;
       transform: translateX(-50%);
-      background: linear-gradient(135deg, #ffffff, #f7f4ed);
-      color: var(--accent-bronze-dark);
+      background: linear-gradient(135deg, #e7e4db, #efede7);
+      color: var(--gold-light);
       font-family: 'Cinzel', serif;
       font-size: 0.75rem;
       font-weight: 700;
       padding: 5px 12px;
       border-radius: 999px;
-      border: 1px solid var(--border-ink-strong);
-      box-shadow: 0 3px 10px rgba(24, 26, 32, 0.1);
+      border: 1px solid var(--border-glass-strong);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.6);
       z-index: 6;
     }
 
@@ -376,8 +363,8 @@
       right: 0;
       top: 358px;
       height: 3px;
-      background: linear-gradient(90deg, transparent, var(--accent-bronze) 15%, #3d2c10 50%, var(--accent-bronze) 85%, transparent);
-      box-shadow: 0 2px 8px rgba(138, 102, 41, 0.25);
+      background: linear-gradient(90deg, transparent, var(--gold) 15%, #000000 50%, var(--gold) 85%, transparent);
+      box-shadow: 0 0 15px rgba(43, 80, 149, 0.4);
       z-index: 3;
     }
 
@@ -391,26 +378,26 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      color: #ffffff;
+      color: #000000;
       font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
-      background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(0, 0, 0, 0.14) 100%);
-      box-shadow: 0 5px 14px rgba(24, 26, 32, 0.16), inset 0 1px 0 rgba(255,255,255,0.35);
+      background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.14) 0%, rgba(255, 255, 255, 0.22) 100%);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.5), inset 0 1px 0 rgba(0, 0, 0, 0.3);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 5;
       overflow: hidden;
       white-space: nowrap;
-      border: 1px solid rgba(0, 0, 0, 0.15);
-      text-shadow: 0 1px 2px rgba(0,0,0,0.45);
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
     }
 
     .historical-period-bar:hover {
       transform: translateY(-3px) scale(1.008);
-      filter: brightness(1.08);
-      box-shadow: 0 10px 24px rgba(24, 26, 32, 0.25), inset 0 1px 0 rgba(255,255,255,0.45);
+      filter: brightness(0.92);
+      box-shadow: 0 12px 30px rgba(255, 255, 255, 0.7), inset 0 1px 0 rgba(0, 0, 0, 0.4);
       z-index: 15;
-      border-color: #181a20;
+      border-color: #000000;
     }
 
     .period-label-text {
@@ -421,12 +408,12 @@
     .period-range-tag {
       font-size: 0.68rem;
       font-weight: 700;
-      background: rgba(0, 0, 0, 0.26);
+      background: rgba(255, 255, 255, 0.35);
       padding: 3px 7px;
       border-radius: 5px;
       letter-spacing: 0.03em;
       flex-shrink: 0;
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     /* Eventi Puntuali (Sotto l'asse) */
@@ -449,44 +436,44 @@
       width: 13px;
       height: 13px;
       border-radius: 50%;
-      border: 2.5px solid #ffffff;
+      border: 2.5px solid var(--bg-deep);
       margin-top: -6px;
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .historical-event-node:hover .event-dot-marker {
-      transform: scale(1.45);
+      transform: scale(1.5);
     }
 
     .event-connector-stem {
       width: 2px;
-      background: linear-gradient(180deg, rgba(138, 102, 41, 0.65) 0%, rgba(24, 26, 32, 0.15) 100%);
+      background: linear-gradient(180deg, rgba(43, 80, 149, 0.6) 0%, rgba(0, 0, 0, 0.15) 100%);
       transition: background 0.2s;
     }
 
     .historical-event-card {
-      background: linear-gradient(180deg, #ffffff 0%, #faf8f3 100%);
-      border: 1px solid rgba(24, 26, 32, 0.12);
+      background: linear-gradient(180deg, #e4e1d7 0%, #eceae3 100%);
+      border: 1px solid rgba(0, 0, 0, 0.12);
       border-left-width: 4px;
       border-radius: 10px;
       padding: 10px 12px;
       width: 174px;
-      box-shadow: 0 8px 20px rgba(24, 26, 32, 0.09), inset 0 1px 0 #ffffff;
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.5), inset 0 1px 0 rgba(0, 0, 0, 0.06);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .historical-event-node:hover .historical-event-card {
       transform: translateY(4px) scale(1.03);
-      background: #ffffff;
-      border-color: rgba(24, 26, 32, 0.28);
-      box-shadow: 0 14px 30px rgba(24, 26, 32, 0.16);
+      background: linear-gradient(180deg, #dbd7ca, #e6e3da);
+      border-color: rgba(0, 0, 0, 0.3);
+      box-shadow: 0 16px 35px rgba(255, 255, 255, 0.7);
     }
 
     .event-card-date {
       font-size: 0.71rem;
       font-weight: 700;
       letter-spacing: 0.03em;
-      filter: brightness(0.85) saturate(1.2);
+      filter: brightness(0.75) saturate(1.3);
     }
 
     .event-card-title {
@@ -501,7 +488,7 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(24, 26, 32, 0.55);
+      background: rgba(250, 249, 246, 0.82);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       display: none;
@@ -519,13 +506,13 @@
     }
 
     .modal-window {
-      background: linear-gradient(180deg, #ffffff 0%, #f9f7f2 100%);
-      border: 1px solid var(--border-ink-strong);
+      background: linear-gradient(180deg, #e3dfd2 0%, #eeece5 100%);
+      border: 1px solid var(--border-glass-strong);
       border-radius: 20px;
       max-width: 560px;
       width: 100%;
       padding: 32px;
-      box-shadow: 0 30px 60px rgba(24, 26, 32, 0.25), inset 0 1px 0 #ffffff;
+      box-shadow: 0 35px 70px rgba(255, 255, 255, 0.85), inset 0 1px 0 rgba(0, 0, 0, 0.12);
       transform: translateY(15px) scale(0.95);
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
@@ -542,7 +529,7 @@
       gap: 16px;
       margin-bottom: 20px;
       padding-bottom: 16px;
-      border-bottom: 1px solid var(--border-ink);
+      border-bottom: 1px solid var(--border-glass);
     }
 
     .modal-category-badge {
@@ -553,10 +540,10 @@
       text-transform: uppercase;
       padding: 5px 14px;
       border-radius: 999px;
-      color: #ffffff;
+      color: #000000;
       margin-bottom: 10px;
-      border: 1px solid rgba(0, 0, 0, 0.15);
-      text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
     }
 
     .modal-headline {
@@ -564,12 +551,12 @@
       font-size: 1.6rem;
       font-weight: 700;
       line-height: 1.25;
-      color: var(--text-main);
+      color: #000000;
     }
 
     .modal-close-btn {
-      background: rgba(24, 26, 32, 0.04);
-      border: 1px solid var(--border-ink);
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-glass);
       width: 38px;
       height: 38px;
       border-radius: 12px;
@@ -584,16 +571,16 @@
     }
 
     .modal-close-btn:hover {
-      background: rgba(24, 26, 32, 0.09);
-      border-color: var(--accent-bronze);
-      color: var(--text-main);
+      background: rgba(0, 0, 0, 0.15);
+      border-color: var(--gold);
+      color: #000000;
       transform: rotate(90deg);
     }
 
     .modal-content-body {
       font-size: 0.96rem;
       line-height: 1.75;
-      color: #363b47;
+      color: #2e2a24;
     }
 
     /* Responsive */
@@ -678,14 +665,12 @@
   </div>
 
   <script>
-    // Inizializzazione icone Lucide
     lucide.createIcons();
 
     const START_YEAR = 1515;
     const END_YEAR = 1680;
     let pixelsPerYear = 14;
 
-    // Configurazione delle corsie geografiche/politiche
     const lanes = [
       { id: 0, title: "Impero / Germania" },
       { id: 1, title: "Impero Asburgico" },
@@ -696,13 +681,13 @@
       { id: 6, title: "Francia" }
     ];
 
-    // Colori per categorie (leggermente più saturi per risaltare su fondo chiaro)
+    /* Complementari esatti (255 - RGB) dei colori delle categorie */
     const categories = {
-      impero: { name: "Impero / Germania", color: "#5c7542" },
-      chiesa: { name: "Stato della Chiesa", color: "#7d4882" },
-      spagna: { name: "Spagna & Fiandre", color: "#997636" },
-      inghilterra: { name: "Inghilterra", color: "#214c82" },
-      francia: { name: "Francia", color: "#943b3e" }
+      impero: { name: "Impero / Germania", color: "#937bac" },      /* da #6c8453 */
+      chiesa: { name: "Stato della Chiesa", color: "#75a971" },     /* da #8a568e */
+      spagna: { name: "Spagna & Fiandre", color: "#5c7cb7" },       /* da #a38348 */
+      inghilterra: { name: "Inghilterra", color: "#d7a970" },       /* da #28568f */
+      francia: { name: "Francia", color: "#60b6b3" }                /* da #9f494c */
     };
 
     const periodi = [
@@ -903,7 +888,7 @@
         const chip = document.createElement("div");
         chip.className = `legend-chip ${activeFilters[key] ? '' : 'inactive'}`;
         chip.innerHTML = `
-          <span class="swatch" style="background: ${cat.color};"></span>
+          <span class="swatch" style="background: ${cat.color}; color: ${cat.color};"></span>
           <span>${cat.name}</span>
         `;
         chip.addEventListener("click", () => {
@@ -996,10 +981,10 @@
         bar.style.top = top + "px";
         bar.style.backgroundColor = color;
         if (searchQuery && matchesSearch) {
-          bar.style.boxShadow = "0 0 0 3px #8a6629, 0 8px 20px rgba(24,26,32,0.3)";
-          bar.style.borderColor = "#181a20";
+          bar.style.boxShadow = "0 0 20px #000000, inset 0 1px 0 rgba(0,0,0,0.5)";
+          bar.style.borderColor = "#000000";
         } else if (searchQuery && !matchesSearch) {
-          bar.style.opacity = "0.22";
+          bar.style.opacity = "0.2";
         }
 
         bar.innerHTML = `
@@ -1031,11 +1016,11 @@
         marker.className = "historical-event-node";
         marker.style.left = left + "px";
         if (searchQuery && !matchesSearch) {
-          marker.style.opacity = "0.22";
+          marker.style.opacity = "0.2";
         }
 
         marker.innerHTML = `
-          <div class="event-dot-marker" style="background: ${color}; box-shadow: 0 0 0 2px ${color};"></div>
+          <div class="event-dot-marker" style="background: ${color}; box-shadow: 0 0 12px ${color};"></div>
           <div class="event-connector-stem" style="height: ${stemHeight}px;"></div>
           <div class="historical-event-card" style="border-left-color: ${color};">
             <div class="event-card-date" style="color: ${color};">${ev.dataEtichetta}</div>
